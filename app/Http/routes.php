@@ -16,14 +16,13 @@ Route::get('/', function () {
 });
 
 Route::get('/api/crimes', function() {
-  $ch = curl_init();
-	$timeout = 60;
-  $url = "https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx";
-	curl_setopt($ch, CURLOPT_URL, $url);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-	$data = curl_exec($ch);
-	curl_close($ch);
+  $client = new GuzzleHttp\Client();
+  $res = $client->get("https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx");
+  $data = (string) $res->getBody();
+
+  if ($res->getStatusCode() != 200) {
+    return response()->json(['error' => 'Couldn\'t retrieve crime data'], 500);
+  }
 
   $classes = [
     'accident' => ['/coll/','/collision/','/crash/'],
@@ -71,5 +70,5 @@ Route::get('/api/crimes', function() {
 
   $crimes = App\Crime::where('active', true)->get();
 
-  return $crimes;
+  return response()->json($crimes);
 });
