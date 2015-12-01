@@ -15,6 +15,7 @@
 <script type="text/javascript">
   $(function() {
     $('#map').height(window.height);
+    toastr.options.preventDuplicates = true;
     drawMap();
     drawCrimes();
     setInterval(drawCrimes, 60000);
@@ -36,9 +37,12 @@
   }
 
   function drawCrimes() {
+    toastr.info('Fetching fresh data...');
     $.ajax({
       'url': '/api/crimes'
     }).success(function(data) {
+      toastr.clear();
+      toastr.success(data.length + " calls in progress.");
       window.oldCrimes = window.newCrimes || null;
       window.newCrimes = data;
       eraseExpiredCrimes();
@@ -51,6 +55,9 @@
           window.markers.push(marker);
         }
       });
+    }).error(function(data) {
+      toastr.clear();
+      toastr.error("Couldn't get fresh data. Will try again in 60 seconds.");
     })
   }
 
