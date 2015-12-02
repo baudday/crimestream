@@ -25,9 +25,10 @@ Route::get('/api/crimes', function() {
   }
 
   $classes = [
-    'accident' => ['/coll/','/collision/','/crash/'],
+    'accident' => ['/coll/','/collision/','/crash/','/non inj/'],
     'serious' => ['/burglary/','/robbery/','/homicide/','/shooting/','/shots/','/theft/','/missing/','/intrusion/','/doa/','/suicide/'],
-    'not_serious' => ['/disturbance/']
+    'not_serious' => ['/disturbance/'],
+    'drunk_driver' => ['/drunk/']
   ];
 
   preg_match_all('/<td .+>(.+)<\/td><td>(.+)<\/td>/sU', $data, $matches);

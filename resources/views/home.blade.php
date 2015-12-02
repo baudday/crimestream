@@ -17,6 +17,7 @@
     $('#map').height(window.height);
     toastr.options.preventDuplicates = true;
     drawMap();
+    toastr.info('Fetching data...');
     drawCrimes();
     setInterval(drawCrimes, 60000);
   });
@@ -37,12 +38,12 @@
   }
 
   function drawCrimes() {
-    toastr.info('Fetching fresh data...');
     $.ajax({
       'url': '/api/crimes'
     }).success(function(data) {
-      toastr.clear();
-      toastr.success(data.length + " calls in progress.");
+      if (!window.oldCrimes || window.oldCrimes.length != data.length) {
+        toastr.success(data.length + " calls in progress.");
+      }
       window.oldCrimes = window.newCrimes || null;
       window.newCrimes = data;
       eraseExpiredCrimes();
@@ -56,7 +57,6 @@
         }
       });
     }).error(function(data) {
-      toastr.clear();
       toastr.error("Couldn't get fresh data. Will try again in 60 seconds.");
     })
   }
@@ -92,16 +92,19 @@
     switch (markerClass) {
       case "serious":
         return "#c0392b";
-      break;
+        break;
       case "accident":
         return "#e67e22";
-      break;
+        break;
+      case "drunk_driver":
+        return "#3498db";
+        break;
       case "not_serious":
         return "#3498db";
-      break;
+        break;
       case "other":
         return "#7f8c8d";
-      break;
+        break;
     }
   }
 
@@ -109,14 +112,17 @@
     switch (markerClass) {
       case "serious":
         return "danger";
-      break;
+        break;
       case "accident":
         return "car";
-      break;
+        break;
+      case "drunk_driver":
+        return "bar";
+        break;
       case "not_serious":
       case "other":
         return null;
-      break;
+        break;
     }
   }
 </script>
