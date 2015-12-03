@@ -7,14 +7,14 @@ use App\Lib\Location;
 
 class Crime extends Model
 {
-    protected $fillable = ['address', 'description', 'class', 'active'];
+    protected $fillable = ['address', 'description', 'class', 'active', 'lat', 'lng'];
 
-    public function save(array $options = [])
+    public static function create(array $options = [])
     {
-      $res = Location::geocode($this->address . ' Tulsa, OK');
+      $res = Location::geocode($options['address'] . ' Tulsa, OK');
       $geo = $res->results[0]->geometry->location;
-      $this->lat = $geo->lat;
-      $this->lng = $geo->lng;
-      parent::save($options);
+      $options['lat'] = $geo->lat;
+      $options['lng'] = $geo->lng;
+      return parent::create($options);
     }
 }
