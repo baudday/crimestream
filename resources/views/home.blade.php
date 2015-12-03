@@ -40,7 +40,7 @@
       if (!window.oldCrimes || window.oldCrimes.length != data.length) {
         toastr.success(data.length + " calls in progress.");
       }
-      window.oldCrimes = window.newCrimes || null;
+      window.oldCrimes = window.newCrimes || data;
       window.newCrimes = data;
       eraseExpiredCrimes();
       $.each(data, function(i, crime) {
