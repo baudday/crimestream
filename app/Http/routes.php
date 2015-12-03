@@ -26,7 +26,7 @@ Route::get('/api/crimes', function() {
 
   $classes = [
     'accident' => ['/coll/','/collision/','/crash/','/non inj/'],
-    'serious' => ['/burglary/','/robbery/','/homicide/','/shooting/','/shots/','/theft/','/missing/','/intrusion/','/doa/','/suicide/','/holdup/'],
+    'serious' => ['/burglary/','/robbery/','/homicide/','/shooting/','/shots/','/theft/','/missing/','/intrusion/','/doa/','/suicide/','/holdup/','/stabbing/'],
     'not_serious' => ['/disturbance/'],
     'drunk_driver' => ['/drunk/']
   ];
