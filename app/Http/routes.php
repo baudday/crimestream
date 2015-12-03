@@ -51,7 +51,7 @@ Route::get('/api/crimes', function() {
     ];
 
     $scraped_crimes[] = $crime;
-    App\Crime::firstOrCreate($crime);
+    App\Crime::firstOrCreate($crime)->update(['active', true]);
     unset($class_val);
   }
 
