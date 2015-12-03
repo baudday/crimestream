@@ -31,10 +31,6 @@
       id: 'mapbox.light',
       accessToken: 'pk.eyJ1IjoiYmF1ZGRheSIsImEiOiJBWkFQV2NJIn0.k1sZSEElIyTFmvVLemkZnA'
     }).addTo(window.map);
-    window.map.setMaxBounds([
-      [36.23928898672854, -95.77812194824219], // NE
-      [36.023557373379276, -96.09638214111328] // SW
-    ]);
   }
 
   function drawCrimes() {
