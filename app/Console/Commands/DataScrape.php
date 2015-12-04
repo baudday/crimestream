@@ -41,6 +41,6 @@ class DataScrape extends Command
     public function handle()
     {
         $calls = $this->dispatch(new FetchPoliceCalls());
-        $this->info(sprintf("Fetched %s calls, set %s to expired",count($calls['scrapped']), count($calls['expired'])));
+        $this->info(sprintf("Fetched %s calls, set %s to expired",$calls['scraped'], $calls['expired']));
     }
 }

@@ -23,6 +23,7 @@ class FetchPoliceCalls extends Job implements SelfHandling
      */
     public function handle()
     {
+
         $client = new \GuzzleHttp\Client();
         $res = $client->get("https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx");
         $data = (string) $res->getBody();
@@ -41,7 +42,6 @@ class FetchPoliceCalls extends Job implements SelfHandling
         preg_match_all('/<td .+>(.+)<\/td><td>(.+)<\/td>/sU', $data, $matches);
 
         $scraped_crimes = [];
-
         foreach ($matches[1] as $key=>$val) {
             foreach ($classes as $class=>$patterns) {
                 foreach ($patterns as $pattern) {
@@ -57,28 +57,19 @@ class FetchPoliceCalls extends Job implements SelfHandling
                 'class' => isset($class_val) ? $class_val : 'other'
             ];
 
-            $scraped_crimes[] = $crime;
-            \App\Crime::firstOrCreate($crime)->update(['active', true]);
+            $crimeModel = \App\Crime::firstOrCreate($crime);
+            $crimeModel->active = true;
+            $crimeModel->save();
+            $scraped_crimes[] = $crimeModel->toArray();
+
             unset($class_val);
         }
 
-        $active_crimes = \App\Crime::where('active', true)->select('description', 'address', 'class')->get();
-        $expired_crimes = array_merge(
-            array_udiff($active_crimes->toArray(), $scraped_crimes, function($a, $b) {
-                return strcasecmp($a['address'], $b['address']);
-            }),
-            array_udiff($scraped_crimes, $active_crimes->toArray(), function ($b, $a) {
-                return strcasecmp($b['address'], $a['address']);
-            })
-        );
-
-        foreach ($expired_crimes as $expired_crime) {
-            \App\Crime::where($expired_crime)->update(['active' => false]);
-        }
+        $expired = \App\Crime::where('updated_at', '<', \Carbon\Carbon::now()->subMinutes(10)->toDateTimeString())->update(['active' => false]);
 
         return [
-            'expired'=>$expired_crimes,
-            'scrapped'=>$scraped_crimes
+            'expired'=>$expired,
+            'scraped'=>count($scraped_crimes)
         ];
     }
 }
