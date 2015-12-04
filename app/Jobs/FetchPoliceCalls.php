@@ -69,7 +69,7 @@ class FetchPoliceCalls extends Job implements SelfHandling
             unset($class_val);
         }
 
-        $expired = \App\Crime::where('updated_at', '<', \Carbon\Carbon::now()->subMinutes(10)->toDateTimeString())->update(['active' => false]);
+        $expired = \App\Crime::where('updated_at', '<', \Carbon\Carbon::now()->subMinutes(6)->toDateTimeString())->update(['active' => false]);
 
         return [
             'expired'=>$expired,
