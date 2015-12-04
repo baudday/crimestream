@@ -22,11 +22,21 @@
       ga('send', 'pageview');
 
     </script>
+    <script>
+      var trackOutboundLink = function(url, name) {
+        if (!name) name = "outbound";
+        ga('send', 'event', name, 'click', url, {'hitCallback':
+          function () {
+            document.location = url;
+          }
+        });
+      }
+    </script>
     @yield('head-stuff')
   </head>
   <body>
-    <a href="https://github.com/baudday/crimestream" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
-    <a href='http://ko-fi.com?i=115Z8K8YWIQP' target='_blank'><img style='position: absolute; bottom: 20px; left: 0; border: 0; z-index: 999; width: 130px;' src='https://az743702.vo.msecnd.net/cdn/btn3.png' border='0' alt='Buy me a coffee at ko-fi.com' /></a> 
+    <a href="https://github.com/baudday/crimestream" onclick="trackOutboundLink('https://github.com/baudday/crimestream', 'github')" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 999;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+    <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'coffee')" target='_blank'><img style='position: absolute; bottom: 20px; left: 0; border: 0; z-index: 999; width: 130px;' src='https://az743702.vo.msecnd.net/cdn/btn3.png' border='0' alt='Buy me a coffee at ko-fi.com' /></a>
     @yield('body')
     @yield('body-scripts')
   </body>
