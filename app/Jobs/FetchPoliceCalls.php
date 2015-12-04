@@ -34,7 +34,11 @@ class FetchPoliceCalls extends Job implements SelfHandling
 
         $classes = [
             'accident' => ['/coll/','/collision/','/crash/','/non inj/'],
-            'serious' => ['/burglary/','/robbery/','/homicide/','/shooting/','/shots/','/theft/','/missing/','/intrusion/','/doa/','/suicide/','/holdup/','/stabbing/'],
+            'serious' => [
+              '/burglary/','/robbery/','/homicide/','/shooting/','/shots/',
+              '/theft/','/missing/','/intrusion/','/doa/','/suicide/',
+              '/holdup/','/stabbing/', '/assault/'
+            ],
             'not_serious' => ['/disturbance/'],
             'drunk_driver' => ['/drunk/']
         ];
