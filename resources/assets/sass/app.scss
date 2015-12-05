@@ -1,2 +1,13 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+$icon-font-path: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/";
 
+$navbar-height: 70px;
+$navbar-margin-bottom: 0px;
+$navbar-border-radius: 0px;
+$navbar-default-bg: #fff;
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
