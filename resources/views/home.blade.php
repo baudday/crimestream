@@ -95,9 +95,6 @@
       case "drunk_driver":
         return "#3498db";
         break;
-      case "not_serious":
-        return "#3498db";
-        break;
       case "other":
         return "#7f8c8d";
         break;
@@ -115,7 +112,6 @@
       case "drunk_driver":
         return "bar";
         break;
-      case "not_serious":
       case "other":
         return null;
         break;
