@@ -2,6 +2,7 @@
 @section('head-stuff')
 <style>
   #map { position:absolute; top:70px; bottom:0; width:100%; }
+  .toast-top-right { margin-top: 70px; }
 </style>
 @stop
 
@@ -50,6 +51,9 @@
           window.markers.push(marker);
         }
       });
+      if (data.map(function(a) { return a.description == "Mark Out for Tow" }).length > 4) {
+        toastr.info('Looks like Mark\'s a busy guy!');
+      }
     }).error(function(data) {
       toastr.error("Couldn't get fresh data. Will try again in 60 seconds.");
     })

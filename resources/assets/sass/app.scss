@@ -3,7 +3,14 @@ $icon-font-path: "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/fonts/";
 $navbar-height: 70px;
 $navbar-margin-bottom: 0px;
 $navbar-border-radius: 0px;
-$navbar-default-bg: #fff;
+$navbar-default-bg: #34495e;
+$navbar-default-color: #f8f8f8;
+$navbar-default-link-color: #f8f8f8;
+$navbar-default-link-hover-color: #f8f8f8;
+$navbar-default-toggle-hover-bg: $navbar-default-bg;
+$navbar-default-toggle-icon-bar-bg: $navbar-default-color;
+$navbar-default-toggle-border-color: transparent;
+
 
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
