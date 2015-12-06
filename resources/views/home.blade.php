@@ -1,9 +1,7 @@
 @extends('layouts.default')
 @section('head-stuff')
 <style>
-  #map {
-    height: 100vh;
-  }
+  #map { position:absolute; top:70px; bottom:0; width:100%; }
 </style>
 @stop
 
