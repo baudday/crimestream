@@ -46,12 +46,12 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a target="_blank" href="https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx" onclick="trackOutboundLink('https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx', 'live-calls')">TPD Live Calls</a></li>
             <li role="separator" class="divider"></li>
-            <li><a target="_blank" href="https://twitter.com/@willem_jr" onclick="trackOutboundLink('https://twitter.com/@willem_jr', 'twitter')"><img src="/img/twitter.png" width="12"> @willem_jr</a></li>
+            <li><a target="_blank" href="https://twitter.com/@willem_jr" onclick="trackOutboundLink('https://twitter.com/@willem_jr', 'twitter')"><img src="/img/twitter.png" width="15"> @willem_jr</a></li>
+            <li><a target="_blank" href="https://github.com/baudday/crimestream" onclick="trackOutboundLink('https://github.com/baudday/crimestream', 'github')"><img src="/img/github.png" width="15"> baudday/crimestream</a></li>
           </ul>
         </div>
       </div>
     </nav>
-    <a href="https://github.com/baudday/crimestream" onclick="trackOutboundLink('https://github.com/baudday/crimestream', 'github')" target="_blank"><img style="position: absolute; top: 0; left: 0; border: 0; z-index: 9999;" src="https://camo.githubusercontent.com/c6625ac1f3ee0a12250227cf83ce904423abf351/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_gray_6d6d6d.png"></a>
     <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'coffee')" target='_blank'><img style='position: absolute; bottom: 20px; left: 0; border: 0; z-index: 9999; width: 130px;' src='https://az743702.vo.msecnd.net/cdn/btn3.png' border='0' alt='Buy me a coffee at ko-fi.com' /></a>
     @yield('body')
     @yield('body-scripts')
