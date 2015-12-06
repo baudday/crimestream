@@ -51,7 +51,7 @@
           window.markers.push(marker);
         }
       });
-      if (data.map(function(a) { return a.description == "Mark Out for Tow" }).length > 4) {
+      if (data.filter(function(a) { return a.description == "Mark Out for Tow" }).length > 4) {
         toastr.info('Looks like Mark\'s a busy guy!');
       }
     }).error(function(data) {
