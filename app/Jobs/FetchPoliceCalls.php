@@ -34,12 +34,14 @@ class FetchPoliceCalls extends Job implements SelfHandling
 
         $classes = [
             'accident' => ['/coll/','/collision/','/crash/','/non inj/'],
+            'alarm' => ['/alarm/'],
+            'alcohol' => ['/drunk/'],
+            'hit-run' => ['/hit.+run/'],
             'serious' => [
               '/burglary/','/robbery/','/homicide/','/shooting/','/shots/',
-              '/theft/','/missing/','/intrusion/','/doa/','/suicide/',
+              '/theft/','/missing/','/doa/','/suicide/',
               '/holdup/','/stabbing/', '/assault/', '/weapon/'
-            ],
-            'drunk_driver' => ['/drunk/']
+            ]
         ];
 
         preg_match_all('/<td .+>(.+)<\/td><td>(.+)<\/td>/sU', $data, $matches);

@@ -87,16 +87,20 @@
   function getColor(markerClass) {
     switch (markerClass) {
       case "serious":
-        return "#c0392b";
+        return "#c0392b"; // red
         break;
+      case "alarm":
+        return "#e67e22"; // orange
+        break;
+      case "hit-run":
       case "accident":
-        return "#e67e22";
+        return "#f1c40f"; // yellow
         break;
-      case "drunk_driver":
-        return "#3498db";
+      case "alcohol":
+        return "#3498db"; // blue
         break;
       case "other":
-        return "#7f8c8d";
+        return "#8e44ad"; // purple
         break;
     }
   }
@@ -104,12 +108,18 @@
   function getIcon(markerClass) {
     switch (markerClass) {
       case "serious":
-        return "danger";
+        return "police";
+        break;
+      case "alarm":
+        return "emergency-telephone";
         break;
       case "accident":
         return "car";
         break;
-      case "drunk_driver":
+      case "hit-run":
+        return "pitch";
+        break;
+      case "alcohol":
         return "bar";
         break;
       case "other":
