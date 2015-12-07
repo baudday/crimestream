@@ -27,6 +27,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('scrape:all')->cron('*/3 * * * * *');
-        $schedule->command('notify:twitter')->cron('*/9 * * * * *');
+        $schedule->command('notify:twitter')->cron('*/6 * * * * *');
     }
 }
