@@ -46,7 +46,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a target="_blank" href="https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx" onclick="trackOutboundLink('https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx', 'live-calls')">TPD Live Calls</a></li>
             <li role="separator" class="divider"></li>
-            <li><a target="_blank" href="https://twitter.com/@willem_jr" onclick="trackOutboundLink('https://twitter.com/@willem_jr', 'twitter')"><img src="/img/twitter.png" width="15"> @willem_jr</a></li>
+            <li><a target="_blank" href="https://twitter.com/CrimeStreamBot" onclick="trackOutboundLink('https://twitter.com/@CrimeStreamBot', 'twitter')"><img src="/img/twitter.png" width="15"> @CrimeStreamBot</a></li>
             <li><a target="_blank" href="https://github.com/baudday/crimestream" onclick="trackOutboundLink('https://github.com/baudday/crimestream', 'github')"><img src="/img/github.png" width="15"> baudday/crimestream</a></li>
           </ul>
         </div>
