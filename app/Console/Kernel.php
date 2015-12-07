@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\Inspire::class,
-        Commands\DataScrape::class
+        Commands\DataScrape::class,
+        Commands\NotifyTwitter::class,
     ];
 
     /**
@@ -26,5 +27,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('scrape:all')->cron('*/3 * * * * *');
+        $schedule->command('notify:twitter')->cron('*/9 * * * * *');
     }
 }
