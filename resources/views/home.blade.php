@@ -16,6 +16,7 @@
     $('#map').height(window.height);
     toastr.options.preventDuplicates = true;
     drawMap();
+    toastr.info('Follow @CrimeStreamBot on Twitter for alerts', '', {timeOut: 15000});
     toastr.info('Fetching data...');
     drawCrimes();
     setInterval(drawCrimes, 60000);
