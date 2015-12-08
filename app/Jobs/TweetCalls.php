@@ -10,6 +10,8 @@ use App\Crime;
 
 class TweetCalls extends Job implements SelfHandling
 {
+    private $hashtags = ['#CrimeStream', '#Tulsa', '#StaySafeTulsa'];
+
     /**
      * Create a new job instance.
      *
@@ -33,7 +35,12 @@ class TweetCalls extends Job implements SelfHandling
         foreach ($calls as $call) {
           $str = "$call->address - $call->description";
           $body = strlen($str) > 100 ? substr($str, 0, 97) . "..." : $str;
-          $message = "ALERT: $body #CrimeStream #StaySafeTulsa";
+          $message = "ALERT: $body";
+          foreach ($this->hashtags as $hashtag) {
+            if (strlen($message . " $hashtag") < 140) {
+              $message .= " $hashtag";
+            }
+          }
           $connection->post('statuses/update', ['status' => $message]);
           $call->tweeted = true;
           $call->save();
