@@ -12,9 +12,14 @@ $navbar-default-toggle-icon-bar-bg: $navbar-default-color;
 $navbar-default-toggle-border-color: transparent;
 
 
-@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans|Bangers);
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 body {
   font-family: 'Open Sans', sans-serif;
+}
+
+.navbar-default .navbar-brand {
+  font-family: Bangers;
+  font-size: 35px;
 }
