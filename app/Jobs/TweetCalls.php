@@ -31,7 +31,18 @@ class TweetCalls extends Job implements SelfHandling
     {
         $connection = new TwitterOAuth(getenv('TWITTER_CONSUMER_KEY'), getenv('TWITTER_CONSUMER_SECRET'), getenv('TWITTER_ACCESS_TOKEN'), getenv('TWITTER_ACCESS_SECRET'));
         $content = $connection->get("account/verify_credentials");
-        $calls = Crime::where(['tweeted' => false, 'active' => true, 'class' => 'serious'])->get();
+        $exclusions = ['/vehicle/','/auto/'];
+        $calls = Crime::where(['tweeted' => false, 'active' => true, 'class' => 'serious'])
+                      ->get()->filter(function ($call) use ($exclusions) {
+                        foreach ($exclusions as $pattern) {
+                          if (preg_match($pattern, strtolower($call->description))) {
+                            return false;
+                          }
+                        }
+
+                        return true;
+                      });
+
         foreach ($calls as $call) {
           $str = "$call->address - $call->description";
           $body = strlen($str) > 100 ? substr($str, 0, 97) . "..." : $str;
