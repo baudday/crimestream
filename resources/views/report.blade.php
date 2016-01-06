@@ -11,6 +11,8 @@
 
 @section('body-scripts')
 <script src="js/leaflet-heat.js"></script>
+<script src="js/heatmap.js"></script>
+<script src="js/leaflet-heatmap.js"></script>
 <script type="text/javascript">
   $(function() {
     $('#map').height(window.height);
@@ -33,10 +35,32 @@
       'url': '/api/report',
       'data': {!! json_encode($report_params) !!}
     }).success(function(data) {
-      var heat = data.map(function(el) {
-        return [el.lat, el.lng];
-      });
-      L.heatLayer(heat, {radius: 25}).addTo(window.map);
+      var cfg = {
+        // radius should be small ONLY if scaleRadius is true (or small radius is intended)
+        // if scaleRadius is false it will be the constant radius used in pixels
+        "radius": 10,
+        "maxOpacity": .5,
+        // scales the radius based on map zoom
+        "scaleRadius": false,
+        // if set to false the heatmap uses the global maximum for colorization
+        // if activated: uses the data maximum within the current map boundaries
+        //   (there will always be a red spot with useLocalExtremas true)
+        "useLocalExtrema": false,
+        // which field name in your data represents the latitude - default "lat"
+        latField: 'lat',
+        // which field name in your data represents the longitude - default "lng"
+        lngField: 'lng'
+      };
+
+
+      var heatmapLayer = new HeatmapOverlay(cfg);
+      var heat = {
+        data: data.map(function(el) {
+          return {lat: el.lat, lng: el.lng, value: 0};
+        })
+      };
+      window.map.addLayer(heatmapLayer);
+      heatmapLayer.setData(heat);
     }).error(function(data) {
 
     })
