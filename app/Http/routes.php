@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/report', function (\Illuminate\Http\Request $request) {
+    $report_params = ['like' => $request->input('like'), 'not_like' => $request->input('not_like')];
+    return view('report', compact('report_params'));
+});
+
 Route::get('/api/crimes', function() {
   $crimes = App\Crime::where('active', true)->get();
   return response()->json($crimes);
@@ -33,9 +38,8 @@ Route::get('/api/report', function(\Illuminate\Http\Request $request) {
       return "description like '%$word%'";
     }, explode(' ', $request->input('like'))));
 
-    $q .= " and $like";
+    $q .= isset($not_like) ? " and $like" : " $like";
   }
-  // dd("select * from crimes where $q");
 
   $crimes = DB::select("select * from crimes where $q");
   return response()->json($crimes);
