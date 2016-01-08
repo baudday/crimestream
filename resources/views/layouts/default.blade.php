@@ -46,9 +46,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">CrimeStream</a>
+          <a class="navbar-brand" href="/">CrimeStream</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/">Home</a></li>
+            <li><a href="report">Reports</a></li>
+          </ul>
           <ul class="nav navbar-nav navbar-right">
             <li><a target="_blank" href="https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx" onclick="trackOutboundLink('https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx', 'live-calls')">TPD Live Calls</a></li>
             <li role="separator" class="divider"></li>
