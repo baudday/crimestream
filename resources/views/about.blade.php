@@ -37,7 +37,7 @@
          CrimeStream's launch.
        </p>
        <p>We plan to add more functionality such as location-based alerts and
-         and possibly a mobile app. This is an open source project and
+         possibly a mobile app. This is an open source project and
          contributions are encouraged. Please check out the
          <a onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'github')" href="http://github.com/baudday/crimestream" target="_blank">Github repo</a>
          if you are interested in contributing.
