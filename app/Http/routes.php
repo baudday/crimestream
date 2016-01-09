@@ -19,6 +19,10 @@ Route::get('/report', function (\Illuminate\Http\Request $request) {
     return view('report');
 });
 
+Route::get('/about', function () {
+  return view('about');
+});
+
 Route::get('/api/crimes', function() {
   $crimes = App\Crime::where('active', true)->get();
   return response()->json($crimes);

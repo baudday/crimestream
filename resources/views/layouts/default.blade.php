@@ -18,6 +18,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <script src='js/Leaflet.MakiMarkers.js'></script>
     <script src='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js'></script>
+    @if (getenv('APP_ENV') == 'production')
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -28,6 +29,7 @@
       ga('send', 'pageview');
 
     </script>
+    @endif
     <script>
       var trackOutboundLink = function(url, name) {
         if (!name) name = "outbound";
@@ -52,12 +54,9 @@
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
             <li><a href="report">Reports</a></li>
+            <li><a href="about">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a target="_blank" href="https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx" onclick="trackOutboundLink('https://www.tulsapolice.org/live-calls-/police-calls-near-you.aspx', 'live-calls')">TPD Live Calls</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a target="_blank" href="https://twitter.com/CrimeStreamBot" onclick="trackOutboundLink('https://twitter.com/@CrimeStreamBot', 'twitter')"><img src="/img/twitter.png" width="15"> @CrimeStreamBot</a></li>
-            <li><a target="_blank" href="https://github.com/baudday/crimestream" onclick="trackOutboundLink('https://github.com/baudday/crimestream', 'github')"><img src="/img/github.png" width="15"> baudday/crimestream</a></li>
           </ul>
         </div>
       </div>
