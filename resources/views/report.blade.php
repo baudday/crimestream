@@ -2,7 +2,7 @@
 @section('head-stuff')
 <link rel="stylesheet" href="css/simple-sidebar.css">
 <style>
-  #map { position:absolute; top:0; bottom:0; width:100%; }
+  #map { position:fixed; top:70px; bottom:0; width:100%; }
   .toast-top-right { margin-top: 70px; }
   body {
     overflow-y: hidden;
@@ -40,6 +40,11 @@
     padding: 0;
   }
 
+  #wrapper {
+    position: fixed;
+    top: 70px;
+  }
+
   #sidebar-wrapper {
     background: #fff;
   }
@@ -74,21 +79,23 @@
     <span class="helper"></span><img class="loader" src="img/loader.gif">
   </div>
   <div class="filter-panel" id="sidebar-wrapper">
-    <div class="container-fluid sidebar-container">
-      <div class="row-fluid">
-        <div class="col-xs-12">
-          <h1>Filters</h1>
-          <hr>
-          <div class="list-group">
-            <a href="#" class="filter list-group-item active" data-slug="accidents">Accidents</a>
-            <a href="#" class="filter list-group-item" data-slug="assaults">Assaults</a>
-            <a href="#" class="filter list-group-item" data-slug="auto-thefts">Auto Thefts</a>
-            <a href="#" class="filter list-group-item" data-slug="burglaries">Burglaries</a>
-            <a href="#" class="filter list-group-item" data-slug="burglaries-from-vehicles">Burglaries from Vehicles</a>
-            <a href="#" class="filter list-group-item" data-slug="disturbances">Disturbances</a>
-            <a href="#" class="filter list-group-item" data-slug="hit-runs">Hit &amp; Runs</a>
-            <a href="#" class="filter list-group-item" data-slug="missing-persons">Missing Persons</a>
-            <a href="#" class="filter list-group-item" data-slug="shootings">Shootings/Shots Fired/Shots Heard</a>
+    <div class="sidebar-container">
+      <div class="container-fluid sidebar-container">
+        <div class="row-fluid">
+          <div class="col-xs-12">
+            <h1>Filters</h1>
+            <hr>
+            <div class="list-group">
+              <a href="#" class="filter list-group-item active" data-slug="accidents">Accidents</a>
+              <a href="#" class="filter list-group-item" data-slug="assaults">Assaults</a>
+              <a href="#" class="filter list-group-item" data-slug="auto-thefts">Auto Thefts</a>
+              <a href="#" class="filter list-group-item" data-slug="burglaries">Burglaries</a>
+              <a href="#" class="filter list-group-item" data-slug="burglaries-from-vehicles">Burglaries from Vehicles</a>
+              <a href="#" class="filter list-group-item" data-slug="disturbances">Disturbances</a>
+              <a href="#" class="filter list-group-item" data-slug="hit-runs">Hit &amp; Runs</a>
+              <a href="#" class="filter list-group-item" data-slug="missing-persons">Missing Persons</a>
+              <a href="#" class="filter list-group-item" data-slug="shootings">Shootings/Shots Fired/Shots Heard</a>
+            </div>
           </div>
         </div>
       </div>
@@ -138,7 +145,7 @@
 <script src="js/leaflet-heatmap.js"></script>
 <script type="text/javascript">
   $(function() {
-    if ($(window).width() < 767) {
+    if ($(window).width() < 768) {
       $("#wrapper").toggleClass("toggled");
     }
     $('#donateModal').modal();
@@ -149,7 +156,7 @@
   });
 
   $('.filter').on('click', function() {
-    if ($(window).width() < 767) {
+    if ($(window).width() < 768) {
       $("#wrapper").toggleClass("toggled");
     }
     var slug = $(this).data('slug');
