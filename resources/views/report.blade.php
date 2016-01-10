@@ -1,10 +1,12 @@
 @extends('layouts.default')
 @section('head-stuff')
+<link rel="stylesheet" href="css/simple-sidebar.css">
 <style>
   #map { position:absolute; top:0; bottom:0; width:100%; }
   .toast-top-right { margin-top: 70px; }
   body {
     overflow-y: hidden;
+    margin-top: 70px;
   }
   .filter-panel {
     overflow-y: scroll;
@@ -32,32 +34,78 @@
     width: 50px;
     height: 50px;
   }
+
+  .map-container {
+    margin: 0px;
+    padding: 0;
+  }
+
+  #sidebar-wrapper {
+    background: #fff;
+  }
+
+  .sidebar-container {
+    margin: 0;
+    padding: 0;
+  }
+
+  #page-content-wrapper {
+    padding: 0;
+  }
+  .expand-btn {
+    z-index: 99999;
+    background: #34495e;
+    position: fixed;
+    top: 50%;
+    padding: 5px;
+    padding-left: 0;
+    border-radius: 0px 30px 30px 0;
+  }
+
+  .expand-img {
+    transform: rotate(270deg);
+  }
 </style>
 @stop
 
 @section('body')
-<div class="overlay">
-  <span class="helper"></span><img class="loader" src="img/loader.gif">
-</div>
-<div class="container-fluid">
-  <div class="row-fluid" style="margin-top: 70px;">
-    <div class="col-xs-3 filter-panel">
-      <h1>Filters</h1>
-      <hr>
-      <div class="list-group">
-        <a href="#" class="filter list-group-item active" data-slug="accidents">Accidents</a>
-        <a href="#" class="filter list-group-item" data-slug="assaults">Assaults</a>
-        <a href="#" class="filter list-group-item" data-slug="auto-thefts">Auto Thefts</a>
-        <a href="#" class="filter list-group-item" data-slug="burglaries">Burglaries</a>
-        <a href="#" class="filter list-group-item" data-slug="burglaries-from-vehicles">Burglaries from Vehicles</a>
-        <a href="#" class="filter list-group-item" data-slug="disturbances">Disturbances</a>
-        <a href="#" class="filter list-group-item" data-slug="hit-runs">Hit &amp; Runs</a>
-        <a href="#" class="filter list-group-item" data-slug="missing-persons">Missing Persons</a>
-        <a href="#" class="filter list-group-item" data-slug="shootings">Shootings/Shots Fired/Shots Heard</a>
+<div id="wrapper">
+  <div class="overlay">
+    <span class="helper"></span><img class="loader" src="img/loader.gif">
+  </div>
+  <div class="filter-panel" id="sidebar-wrapper">
+    <div class="container-fluid sidebar-container">
+      <div class="row-fluid">
+        <div class="col-xs-12">
+          <h1>Filters</h1>
+          <hr>
+          <div class="list-group">
+            <a href="#" class="filter list-group-item active" data-slug="accidents">Accidents</a>
+            <a href="#" class="filter list-group-item" data-slug="assaults">Assaults</a>
+            <a href="#" class="filter list-group-item" data-slug="auto-thefts">Auto Thefts</a>
+            <a href="#" class="filter list-group-item" data-slug="burglaries">Burglaries</a>
+            <a href="#" class="filter list-group-item" data-slug="burglaries-from-vehicles">Burglaries from Vehicles</a>
+            <a href="#" class="filter list-group-item" data-slug="disturbances">Disturbances</a>
+            <a href="#" class="filter list-group-item" data-slug="hit-runs">Hit &amp; Runs</a>
+            <a href="#" class="filter list-group-item" data-slug="missing-persons">Missing Persons</a>
+            <a href="#" class="filter list-group-item" data-slug="shootings">Shootings/Shots Fired/Shots Heard</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-xs-9">
-      <div id="map"></div>
+  </div>
+  <div id="page-content-wrapper">
+    <div class="container-fluid map-container">
+      <div class="row-fluid">
+        <div class="col-xs-12" style="padding-left: 0;">
+          <div class="expand-btn">
+            <a href="#" id="menu-toggle">
+              <img class="expand-img" src="img/expand.png" title="Expand">
+            </a>
+          </div>
+          <div id="map"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -90,6 +138,9 @@
 <script src="js/leaflet-heatmap.js"></script>
 <script type="text/javascript">
   $(function() {
+    if ($(window).width() < 767) {
+      $("#wrapper").toggleClass("toggled");
+    }
     $('#donateModal').modal();
     $('.filter-panel').height(window.innerHeight - 70);
     $('#map').height(window.innerHeight - 70);
@@ -98,6 +149,9 @@
   });
 
   $('.filter').on('click', function() {
+    if ($(window).width() < 767) {
+      $("#wrapper").toggleClass("toggled");
+    }
     var slug = $(this).data('slug');
     $('.filter').removeClass('active');
     $(this).addClass('active');
@@ -107,6 +161,11 @@
 
   $('#donate').on('click', function() {
     $('#donateModal').modal('hide');
+  });
+
+  $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
   });
 
   function drawMap() {
