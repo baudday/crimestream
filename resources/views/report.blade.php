@@ -4,6 +4,7 @@
 <style>
   #map { position:fixed; top:70px; bottom:0; width:100%; }
   .toast-top-right { margin-top: 70px; }
+  #toast-container { z-index: 1048; }
   body {
     overflow-y: hidden;
     margin-top: 70px;

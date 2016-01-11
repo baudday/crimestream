@@ -10,9 +10,9 @@
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#34495e">
     <title>CrimeStream</title>
-    <link href='/css/app.css' rel='stylesheet'>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link href='/css/app.css' rel='stylesheet'>
     <script src='//code.jquery.com/jquery-2.1.4.min.js'></script>
     <script src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
@@ -61,7 +61,7 @@
         </div>
       </div>
     </nav>
-    <div id="follow-btn-container" style='position: absolute; top: 80px; right: 10px; z-index: 9999;'>
+    <div id="follow-btn-container" style='position: absolute; top: 80px; right: 10px; z-index: 1048;'>
       <a href="https://twitter.com/CrimeStreamBot" onclick="trackOutboundLink('https://twitter.com/CrimeStreamBot', 'twitter-follow-btn')" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false">Follow @CrimeStreamBot</a>
     </div>
     <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'coffee')" target='_blank'><img style='position: absolute; bottom: 20px; left: 0; border: 0; z-index: 9999; width: 130px;' src='https://az743702.vo.msecnd.net/cdn/btn3.png' border='0' alt='Buy me a coffee at ko-fi.com' /></a>
