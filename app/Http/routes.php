@@ -81,7 +81,10 @@ Route::group(['prefix' => 'api'], function() {
         break;
     }
 
-    $crimes = DB::select("select * from crimes where $q");
+    $crimes = Cache::remember($slug, 24*60, function() use ($q) {
+      return DB::select("select * from crimes where $q");
+    });
+
     return response()->json($crimes);
   });
 });
