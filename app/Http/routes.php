@@ -29,6 +29,10 @@ Route::group(['prefix' => 'api'], function() {
       $crimes = App\Crime::where('active', true)->orderBy('created_at', 'desc')->get();
       return response()->json($crimes);
     });
+    Route::get('alerts', function() {
+      $crimes = App\Crime::where(['active' => true, 'tweeted' => true])->orderBy('created_at', 'desc')->get();
+      return response()->json($crimes);
+    });
   });
 
   Route::get('report', function(\Illuminate\Http\Request $request) {
