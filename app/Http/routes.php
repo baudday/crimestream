@@ -23,12 +23,14 @@ Route::get('/about', function () {
   return view('about');
 });
 
-Route::get('/api/crimes', function() {
-  $crimes = App\Crime::where('active', true)->get();
-  return response()->json($crimes);
-});
-
 Route::group(['prefix' => 'api'], function() {
+  Route::group(['middleware' => 'cors'], function() {
+    Route::get('crimes', function() {
+      $crimes = App\Crime::where('active', true)->orderBy('created_at', 'desc')->get();
+      return response()->json($crimes);
+    });
+  });
+
   Route::get('report', function(\Illuminate\Http\Request $request) {
     $q = "";
     if ($request->input('not_like')) {
