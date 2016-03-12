@@ -47,19 +47,20 @@ class FetchPoliceCalls extends Job implements SelfHandling
         preg_match_all('/<td .+>(.+)<\/td><td>(.+)<\/td>/sU', $data, $matches);
 
         $scraped_crimes = [];
-        foreach ($matches[1] as $key=>$val) {
+        foreach ($matches[1] as $key=>$call) {
             foreach ($classes as $class=>$patterns) {
                 foreach ($patterns as $pattern) {
-                    if (preg_match($pattern, strtolower($val))) {
+                    if (preg_match($pattern, strtolower($call))) {
                         $class_val = $class;
                     }
                 }
             }
 
             $crime = [
-                'description' => $val,
+                'description' => $call,
                 'address' => ucwords(strtolower($matches[2][$key])),
-                'class' => isset($class_val) ? $class_val : 'other'
+                'class' => isset($class_val) ? $class_val : 'other',
+                'active' => true
             ];
 
             $crimeModel = \App\Crime::firstOrCreate($crime);
