@@ -35,26 +35,6 @@ Route::group(['prefix' => 'api'], function() {
     });
   });
 
-  Route::get('report', function(\Illuminate\Http\Request $request) {
-    $q = "";
-    if ($request->input('not_like')) {
-      $not_like = implode(' and ', array_map(function($word) {
-        return "description not like '%$word%'";
-      }, explode(' ', $request->input('not_like'))));
-      $q .= isset($not_like) ? "$not_like" : "";
-    }
-    if ($request->input('like')) {
-      $like = implode(' or ', array_map(function($word) {
-        return "description like '%$word%'";
-      }, explode(' ', $request->input('like'))));
-
-      $q .= isset($not_like) ? " and $like" : " $like";
-    }
-
-    $crimes = DB::select("select * from crimes where $q");
-    return response()->json($crimes);
-  });
-
   Route::get('filter', function(\Illuminate\Http\Request $request) {
     if (!$slug = $request->input('slug')) return;
     switch ($slug) {
