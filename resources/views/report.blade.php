@@ -197,14 +197,14 @@
       var cfg = {
         // radius should be small ONLY if scaleRadius is true (or small radius is intended)
         // if scaleRadius is false it will be the constant radius used in pixels
-        "radius": .005,
-        "maxOpacity": .5,
+        "radius": 7,
+        // "maxOpacity": .5,
         // scales the radius based on map zoom
-        "scaleRadius": true,
+        // "scaleRadius": false,
         // if set to false the heatmap uses the global maximum for colorization
         // if activated: uses the data maximum within the current map boundaries
         //   (there will always be a red spot with useLocalExtremas true)
-        "useLocalExtrema": true,
+        // "useLocalExtrema": false,
         // which field name in your data represents the latitude - default "lat"
         latField: 'lat',
         // which field name in your data represents the longitude - default "lng"
