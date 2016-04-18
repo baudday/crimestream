@@ -74,7 +74,7 @@ class Filter extends Controller
 
 
 
-        $crimes = Cache::remember($slug, 1, function() use ($filter) {
+        $crimes = Cache::remember($slug, 24*60, function() use ($filter) {
             $query = \App\Crime::select('*');
             foreach($filter as $condition){
                 call_user_func_array([$query,'orWhere'],$condition);
