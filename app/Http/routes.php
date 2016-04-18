@@ -11,66 +11,21 @@
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'Pages@home');
 
-Route::get('/report', function (\Illuminate\Http\Request $request) {
-    return view('report');
-});
+Route::get('/report', 'Report@index');
 
-Route::get('/about', function () {
-  return view('about');
-});
+Route::get('/about', 'Pages@about');
 
 Route::group(['prefix' => 'api'], function() {
+
   Route::group(['middleware' => 'cors'], function() {
-    Route::get('crimes', function() {
-      $crimes = App\Crime::where('active', true)->orderBy('created_at', 'desc')->get();
-      return response()->json($crimes);
-    });
-    Route::get('alerts', function() {
-      $crimes = App\Crime::where(['active' => true, 'tweeted' => true])->orderBy('created_at', 'desc')->get();
-      return response()->json($crimes);
-    });
+
+    Route::get('crimes', 'Api\Crimes@index');
+    Route::get('alerts', 'Api\Alert@index');
+
   });
 
-  Route::get('filter', function(\Illuminate\Http\Request $request) {
-    if (!$slug = $request->input('slug')) return;
-    switch ($slug) {
-      case 'accidents':
-        $q = "description like '%inj%' or description like '%col%'";
-        break;
-      case 'assaults':
-        $q = "description like '%aslt%' or description like '%assault%'";
-        break;
-      case 'auto-thefts':
-        $q = "description like '%theft%'";
-        break;
-      case 'burglaries':
-        $q = "description not like '%vehicle%' and description like '%burglary%'";
-        break;
-      case 'burglaries-from-vehicles':
-        $q = "description not like '%abandoned%' and description like '%vehicle%'";
-        break;
-      case 'disturbances':
-        $q = "description like '%disturbance%'";
-        break;
-      case 'hit-runs':
-        $q = "description like '%hit&amp;run%'";
-        break;
-      case 'missing-persons':
-        $q = "description like '%missing%'";
-        break;
-      case 'shootings':
-        $q = "description like '%shot%' or description like '%shooting%'";
-        break;
-    }
+  Route::get('filter', 'Api\Filter@index');
 
-    $crimes = Cache::remember($slug, 24*60, function() use ($q) {
-      return DB::select("select * from crimes where $q");
-    });
-
-    return response()->json($crimes);
-  });
 });
