@@ -6,3 +6,4 @@ Homestead.json
 .vagrant
 .provision
 .idea
+/public/css/app*
