@@ -55,7 +55,7 @@
             <li><a href="/">Home</a></li>
             <li><a href="report">Reports</a></li>
             <li><a href="about">About</a></li>
-            <li><a href="//citygram.org/tulsa">Text Message Alerts!</a></li>
+            <li><a target="_blank" onclick="trackOutboundLink('https://citygram.org/tulsa', 'alerts-btn')" href="//citygram.org/tulsa">Text Message Alerts!</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
           </ul>
