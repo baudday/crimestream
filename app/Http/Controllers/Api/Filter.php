@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Filter extends Controller
 {
@@ -72,16 +73,16 @@ class Filter extends Controller
                 break;
         }
 
-
-
-        $crimes = Cache::remember($slug, 24*60, function() use ($filter) {
-            $query = \App\Crime::select('*');
-            foreach($filter as $condition){
-                call_user_func_array([$query,'orWhere'],$condition);
+        // Only get the last 3 months of data. Should be plenty
+        $query = \App\Crime::select('*')
+          ->where('created_at', '>=', Carbon::now()->subMonths(3)->toDateTimeString())
+          ->where(function ($q) use ($filter) {
+            foreach($filter as $condition) {
+                call_user_func_array([$q, 'orWhere'], $condition);
             }
-            return $query->get();
-        });
+          });
 
+        $crimes = $query->get();
         return response()->json($crimes);
     }
 
