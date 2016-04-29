@@ -141,6 +141,7 @@
 @stop
 
 @section('body-scripts')
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="js/leaflet-heat.js"></script>
 <script src="js/heatmap.js"></script>
 <script src="js/leaflet-heatmap.js"></script>
@@ -194,33 +195,39 @@
       'data': {slug: slug}
     }).success(function(data) {
       toastr.success(data.length + " calls");
+      var points = [];
+
+      // Filter out improperly mapped accidents
+      if(slug == "accidents") data = _.reject(data, function(el) {
+        return el.lat == 36.1539816 && el.lng == -95.992775;
+      });
+
+      _.each(data, function(point) {
+        points.push({lat: point.lat, lng: point.lng, count: 0.5});
+      });
+
       var cfg = {
         // radius should be small ONLY if scaleRadius is true (or small radius is intended)
         // if scaleRadius is false it will be the constant radius used in pixels
-        "radius": 7,
-        // "maxOpacity": .5,
+        "radius": 0.004,
+        "maxOpacity": .8,
         // scales the radius based on map zoom
-        // "scaleRadius": false,
+        "scaleRadius": true,
         // if set to false the heatmap uses the global maximum for colorization
         // if activated: uses the data maximum within the current map boundaries
         //   (there will always be a red spot with useLocalExtremas true)
-        // "useLocalExtrema": false,
+        "useLocalExtrema": false,
         // which field name in your data represents the latitude - default "lat"
         latField: 'lat',
         // which field name in your data represents the longitude - default "lng"
         lngField: 'lng',
         // which field name in your data represents the data value - default "value"
-        valueField: 'val'
+        valueField: 'count'
       };
-
 
       if (window.heatmapLayer) window.map.removeLayer(window.heatmapLayer);
       window.heatmapLayer = new HeatmapOverlay(cfg);
-      var heat = {
-        data: data.map(function(el) {
-          return {lat: el.lat, lng: el.lng, val: 1};
-        })
-      };
+      var heat = { data: points };
       window.map.addLayer(window.heatmapLayer);
       heatmapLayer.setData(heat);
     }).error(function(data) {
