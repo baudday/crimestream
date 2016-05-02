@@ -13,9 +13,12 @@
 
 Route::get('/', 'Pages@home');
 
+Route::get('/about', 'Pages@about');
+
 Route::get('/report', 'Report@index');
 
-Route::get('/about', 'Pages@about');
+Route::get('/address-lookup', 'Search@index');
+
 
 Route::group(['prefix' => 'api'], function() {
 
@@ -23,9 +26,10 @@ Route::group(['prefix' => 'api'], function() {
 
     Route::get('crimes', 'Api\Crimes@index');
     Route::get('alerts', 'Api\Alert@index');
+    Route::get('filter', 'Api\Filter@index');
+    Route::get('radius', 'Api\Filter@radius');
 
   });
 
-  Route::get('filter', 'Api\Filter@index');
 
 });

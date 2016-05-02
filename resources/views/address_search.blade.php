@@ -5,8 +5,8 @@
 @stop
 
 @section('body')
-<div id="wrapper">
-  <div class="overlay">
+<div id="wrapper" class="toggled">
+  <div class="overlay" style="display: none;">
     <span class="helper"></span><img class="loader" src="img/loader.gif">
   </div>
   <div class="info-panel" id="sidebar-wrapper">
@@ -14,19 +14,8 @@
       <div class="container-fluid sidebar-container">
         <div class="row-fluid">
           <div class="col-xs-12">
-            <h1>Filters</h1>
+            <h1 id="address"></h1>
             <hr>
-            <div class="list-group">
-              <a href="#" class="filter list-group-item active" data-slug="accidents">Accidents</a>
-              <a href="#" class="filter list-group-item" data-slug="assaults">Assaults</a>
-              <a href="#" class="filter list-group-item" data-slug="auto-thefts">Auto Thefts</a>
-              <a href="#" class="filter list-group-item" data-slug="burglaries">Burglaries</a>
-              <a href="#" class="filter list-group-item" data-slug="burglaries-from-vehicles">Burglaries from Vehicles</a>
-              <a href="#" class="filter list-group-item" data-slug="disturbances">Disturbances</a>
-              <a href="#" class="filter list-group-item" data-slug="hit-runs">Hit &amp; Runs</a>
-              <a href="#" class="filter list-group-item" data-slug="missing-persons">Missing Persons</a>
-              <a href="#" class="filter list-group-item" data-slug="shootings">Shootings/Shots Fired/Shots Heard</a>
-            </div>
           </div>
         </div>
       </div>
@@ -36,78 +25,29 @@
     <div class="container-fluid map-container">
       <div class="row-fluid">
         <div class="col-xs-12" style="padding-left: 0;">
-          <div class="expand-btn">
-            <a href="#" id="menu-toggle">
-              <img class="expand-img" src="img/expand.png" title="Expand">
-            </a>
-          </div>
+          <input type='text' id="address-input" class='form-control input-lg' placeholder='Address' tabindex="1" style="z-index: 99999; position: fixed; left: 10%; width: 80%; margin: 10px; border-radius: 0px;">
           <div id="map"></div>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<div id="donateModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Hey, freedom ain't free...</h4>
-      </div>
-      <div class="modal-body">
-        <p>And apparently neither is server time. So if you appreciate this
-          service, please consider
-          <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'donate')" target='_blank'>donating</a>
-          to help keep it alive. Thanks!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Nah, I'm good</button>
-        <a id="donate" href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'donate')" target='_blank' class="btn btn-primary">Donate</a>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 @stop
 
 @section('body-scripts')
 <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script src="js/leaflet-heat.js"></script>
-<script src="js/heatmap.js"></script>
-<script src="js/leaflet-heatmap.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0-rc.2/jquery-ui.min.js" integrity="sha256-55Jz3pBCF8z9jBO1qQ7cIf0L+neuPTD1u7Ytzrp2dqo=" crossorigin="anonymous"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.23&key=AIzaSyAkIPWgouXEvh_Zk7ny5WVg23oK9a3WhJg&libraries=places"></script>
 <script type="text/javascript">
+  var geocoder = new google.maps.Geocoder();
+  var lastRequest = new Date().getTime();
+  var bounds;
+  var marker = L.marker([], { icon: L.MakiMarkers.icon({color: '#3498db', size: 'm'}) });
+  var markers = [];
   $(function() {
-    if ($(window).width() < 768) {
-      $("#wrapper").toggleClass("toggled");
-    }
-    $('#donateModal').modal();
+    $('#address-input').focus();
     $('.info-panel').height(window.innerHeight - 70);
     $('#map').height(window.innerHeight - 70);
-    drawMap();
-    draw();
-  });
-
-  $('.filter').on('click', function() {
-    if ($(window).width() < 768) {
-      $("#wrapper").toggleClass("toggled");
-    }
-    var slug = $(this).data('slug');
-    $('.filter').removeClass('active');
-    $(this).addClass('active');
-    draw(slug);
-    return false;
-  });
-
-  $('#donate').on('click', function() {
-    $('#donateModal').modal('hide');
-  });
-
-  $("#menu-toggle").click(function(e) {
-      e.preventDefault();
-      $("#wrapper").toggleClass("toggled");
-  });
-
-  function drawMap() {
     window.map = L.map('map').setView([36.1314, -95.9372], 11);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -115,6 +55,47 @@
       id: 'mapbox.light',
       accessToken: 'pk.eyJ1IjoiYmF1ZGRheSIsImEiOiJBWkFQV2NJIn0.k1sZSEElIyTFmvVLemkZnA'
     }).addTo(window.map);
+    var sw = window.map.getBounds().getSouthWest();
+    var ne = window.map.getBounds().getNorthEast();
+    bounds = new google.maps.LatLngBounds({lat: sw.lat, lng: sw.lng}, {lat: ne.lat, lng: ne.lng});
+    var input = document.getElementById('address-input');
+    autocomplete = new google.maps.places.Autocomplete(input, {
+      bounds: bounds,
+      types: ['address']
+    });
+    google.maps.event.addListener(autocomplete, 'place_changed', geocode);
+  });
+
+  function geocode() {
+    var place = autocomplete.getPlace();
+    if (place.hasOwnProperty('geometry')) {
+      $('.overlay').show();
+      var point = [place.geometry.location.lat(), place.geometry.location.lng()];
+      marker.setLatLng(point);
+      marker.addTo(window.map);
+      marker.update();
+      window.map.setView(point, 16);
+      getCrimes(place.geometry.location.lat(), place.geometry.location.lng());
+      $('.overlay').hide();
+    }
+  }
+
+  function getCrimes(lat, lng) {
+    $.ajax({
+      url: '/api/radius',
+      data: { lat: lat, lng: lng }
+    }).success(function(data) {
+      toastr.success(data.length + " serious calls within 1/4 mile of this address in the last 3 months.");
+      $.each(markers, function(i, m) { window.map.removeLayer(m) });
+      markers = [];
+      $.each(data, function(i, crime) {
+        var icon = L.MakiMarkers.icon({icon: 'police', color: '#c0392b', size: 'm'});
+        var m = L.marker([crime.lat, crime.lng], {icon: icon});
+        m.bindPopup("<b>" + crime.description + "</b><br />" + crime.address + "<br /><small>" + crime.class + "</small><br /><small>" + crime.created_at + "</small>");
+        m.addTo(window.map);
+        markers.push(m);
+      });
+    });
   }
 
   function draw(slug) {
