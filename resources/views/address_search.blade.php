@@ -43,6 +43,7 @@
   var lastRequest = new Date().getTime();
   var bounds;
   var marker = L.marker([], { icon: L.MakiMarkers.icon({color: '#3498db', size: 'm'}) });
+  var circle = L.circle([], 402.336);
   var markers = [];
   $(function() {
     $('#address-input').focus();
@@ -74,6 +75,8 @@
       marker.setLatLng(point);
       marker.addTo(window.map);
       marker.update();
+      circle.setLatLng(point);
+      circle.addTo(window.map);
       window.map.setView(point, 16);
       getCrimes(place.geometry.location.lat(), place.geometry.location.lng());
       $('.overlay').hide();
