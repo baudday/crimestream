@@ -17,4 +17,15 @@ class Crime extends Model
       $options['lng'] = $geo->lng;
       return parent::create($options);
     }
+
+    public function scopeNear($query, $lat, $lng, $distance = 0.25)
+    {
+      return $query->having('distance','<=', $distance)->select(\DB::raw("*,
+        (3963.17 * ACOS(COS(RADIANS($lat))
+          * COS(RADIANS(lat))
+          * COS(RADIANS($lng) - RADIANS(lng))
+          + SIN(RADIANS($lat))
+          * SIN(RADIANS(lat)))) AS distance")
+        )->orderBy('distance','asc');
+    }
 }

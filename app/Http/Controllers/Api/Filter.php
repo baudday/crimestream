@@ -88,18 +88,10 @@ class Filter extends Controller
 
     public function radius(Request $request)
     {
-      $lat = (float) $request->input('lat');
-      $lng = (float) $request->input('lng');
-      $crimes = \App\Crime::having('distance','<=', 0.25)->select(DB::raw("*,
-                            (3963.17 * ACOS(COS(RADIANS($lat))
-                                * COS(RADIANS(lat))
-                                * COS(RADIANS($lng) - RADIANS(lng))
-                                + SIN(RADIANS($lat))
-                                * SIN(RADIANS(lat)))) AS distance")
-                )->orderBy('distance','asc')
-                ->where('class', 'serious')
-                ->where('created_at', '>=', Carbon::now()->subMonths(3)->toDateTimeString())
-                ->get();
+      $crimes = \App\Crime::near((float) $request->input('lat'), (float) $request->input('lng'))
+        ->where('class', 'serious')
+        ->where('created_at', '>=', Carbon::now()->subMonths(3)->toDateTimeString())
+        ->get();
       return response()->json($crimes);
     }
 
