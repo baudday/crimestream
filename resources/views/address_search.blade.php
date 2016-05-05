@@ -1,6 +1,5 @@
 @extends('layouts.default')
 @section('head-stuff')
-<link rel="stylesheet" href="css/simple-sidebar.css">
 <link rel="stylesheet" href="css/reports-styles.css" media="screen" charset="utf-8">
 @stop
 
@@ -9,24 +8,27 @@
   <div class="overlay" style="display: none;">
     <span class="helper"></span><img class="loader" src="img/loader.gif">
   </div>
-  <div class="info-panel" id="sidebar-wrapper">
-    <div class="sidebar-container">
-      <div class="container-fluid sidebar-container">
-        <div class="row-fluid">
-          <div class="col-xs-12">
-            <h1 id="address"></h1>
-            <hr>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div id="page-content-wrapper">
     <div class="container-fluid map-container">
       <div class="row-fluid">
         <div class="col-xs-12" style="padding-left: 0;">
           <input type='text' id="address-input" class='form-control input-lg' placeholder='Address' tabindex="1" style="z-index: 99999; position: fixed; left: 10%; width: 80%; margin: 10px; border-radius: 0px;">
           <div id="map"></div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="col-xs-12 info" style="display: none; position: fixed; bottom: 0; background: #fff; box-shadow: 0px 1px 3px 1px; padding: 10px;">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
+                <h1 id="address"></h1>
+                <hr>
+                <p id="summary"></p>
+                <h2>Top Reports</h2>
+                <ul id="crime-counts"></ul>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -77,7 +79,7 @@
       marker.update();
       circle.setLatLng(point);
       circle.addTo(window.map);
-      window.map.setView(point, 16);
+      window.map.setView(point, 15);
       getCrimes(place.geometry.location.lat(), place.geometry.location.lng());
       $('.overlay').hide();
     }
@@ -88,10 +90,23 @@
       url: '/api/radius',
       data: { lat: lat, lng: lng }
     }).success(function(data) {
-      toastr.success(data.length + " serious calls within 1/4 mile of this address in the last 3 months.");
+      $('#address').html(autocomplete.formatted_address);
+      $('#address').html(autocomplete.getPlace().formatted_address);
+      $('#summary').html(getSummary(data.meta.counts.total, data.meta.average));
+      $('#crime-counts').html('');
+      $('#crime-counts').append(function() {
+        var str = '';
+        $.each(data.meta.counts, function(k, crime) {
+          if (k != 'total') {
+            str += '<li>' + k + ' - ' + crime + '</li>';
+          }
+        });
+        return str;
+      });
+      $('.info').slideDown(function() { window.map.panBy([0, $('.info').height() / 3]) });
       $.each(markers, function(i, m) { window.map.removeLayer(m) });
       markers = [];
-      $.each(data, function(i, crime) {
+      $.each(data.crimes, function(i, crime) {
         var icon = L.MakiMarkers.icon({icon: 'police', color: '#c0392b', size: 'm'});
         var m = L.marker([crime.lat, crime.lng], {icon: icon});
         m.bindPopup("<b>" + crime.description + "</b><br />" + crime.address + "<br /><small>" + crime.class + "</small><br /><small>" + crime.created_at + "</small>");
@@ -101,54 +116,17 @@
     });
   }
 
-  function draw(slug) {
-    var slug = slug || 'accidents';
-    $('.overlay').show();
-    $.ajax({
-      'url': '/api/filter',
-      'data': {slug: slug}
-    }).success(function(data) {
-      toastr.success(data.length + " calls");
-      var points = [];
-
-      // Filter out improperly mapped accidents
-      if(slug == "accidents" || slug == "hit-runs") data = _.reject(data, function(el) {
-        return el.lat == 36.1539816 && el.lng == -95.992775;
-      });
-
-      _.each(data, function(point) {
-        points.push({lat: point.lat, lng: point.lng, count: 0.5});
-      });
-
-      var cfg = {
-        // radius should be small ONLY if scaleRadius is true (or small radius is intended)
-        // if scaleRadius is false it will be the constant radius used in pixels
-        "radius": 0.004,
-        "maxOpacity": .8,
-        // scales the radius based on map zoom
-        "scaleRadius": true,
-        // if set to false the heatmap uses the global maximum for colorization
-        // if activated: uses the data maximum within the current map boundaries
-        //   (there will always be a red spot with useLocalExtremas true)
-        "useLocalExtrema": false,
-        // which field name in your data represents the latitude - default "lat"
-        latField: 'lat',
-        // which field name in your data represents the longitude - default "lng"
-        lngField: 'lng',
-        // which field name in your data represents the data value - default "value"
-        valueField: 'count'
-      };
-
-      if (window.heatmapLayer) window.map.removeLayer(window.heatmapLayer);
-      window.heatmapLayer = new HeatmapOverlay(cfg);
-      var heat = { data: points };
-      window.map.addLayer(window.heatmapLayer);
-      heatmapLayer.setData(heat);
-    }).error(function(data) {
-      toastr.error('Something went wrong :(');
-    }).complete(function() {
-      $('.overlay').hide();
-    });
+  function getSummary(count, average) {
+    var percent = (count / average) * 100;
+    var start = "The number of serious incidents reported within a quarter mile of this location within the last three months is ";
+    if (percent < 50)
+      return start + "<span style='color: green; font-weight: strong;'>well below average</span>.";
+    if (percent < 100)
+      return start + "<span style='color: green; font-weight: strong;'>below average</span>.";
+    if (percent > 150)
+      return start + "<span style='color: red; font-weight: strong;'>well above average</span>.";
+    if (percent > 100)
+      return start + "<span style='color: orange; font-weight: strong;'>above average</span>.";
   }
 </script>
 @stop

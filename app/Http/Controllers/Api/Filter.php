@@ -92,7 +92,27 @@ class Filter extends Controller
         ->where('class', 'serious')
         ->where('created_at', '>=', Carbon::now()->subMonths(3)->toDateTimeString())
         ->get();
-      return response()->json($crimes);
+
+      $crime_counts = [];
+
+      foreach ($crimes as $crime) {
+        if (array_key_exists($crime->description, $crime_counts)) {
+          $crime_counts[$crime->description]++;
+        }
+        else {
+          $crime_counts[$crime->description] = 1;
+        }
+      }
+
+      arsort($crime_counts);
+
+      return response()->json([
+        'meta' => [
+          'average' => \App\Crime::where('class', 'serious')->count() / (186.8 / 0.25),
+          'counts' => array_merge([ 'total' => count($crimes) ], $crime_counts)
+        ],
+        'crimes' => $crimes
+      ]);
     }
 
 }
