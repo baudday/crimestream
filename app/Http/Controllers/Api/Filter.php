@@ -96,11 +96,12 @@ class Filter extends Controller
       $crime_counts = [];
 
       foreach ($crimes as $crime) {
-        if (array_key_exists($crime->description, $crime_counts)) {
-          $crime_counts[$crime->description]++;
+        $key = $this->match($crime->description);
+        if (array_key_exists($key, $crime_counts)) {
+          $crime_counts[$key]++;
         }
         else {
-          $crime_counts[$crime->description] = 1;
+          $crime_counts[$key] = 1;
         }
       }
 
@@ -115,4 +116,44 @@ class Filter extends Controller
       ]);
     }
 
+    private function match($str)
+    {
+      $possible = [
+        'burglary' => ['burglary', 'burglary from vehicle'],
+        'robbery' => ['robbery', 'strong-arm'],
+        'homicide' => 'homicide',
+        'shooting' => ['shooting', 'shots'],
+        'auto theft' => 'auto theft',
+        'missing person' => 'missing person',
+        'suicide' => ['doa', 'suicide'],
+        'alarm holdup' => 'alarm holdup',
+        'stabbing' => 'stabbing',
+        'assault' => 'assault',
+        'disturbance weapon' => 'disturbance weapon',
+        'wanted subject' => 'wanted subject'
+      ];
+
+      $shortest = -1;
+      foreach ($possible as $key => $value) {
+        if (is_array($value)) {
+          foreach ($value as $word) {
+            $lev = levenshtein($str, $word);
+            if ($lev == 0) return $key;
+            if ($lev <= $shortest || $shortest < 0) {
+              $closest = $key;
+              $shortest = $lev;
+            }
+          }
+        }
+        else {
+          $lev = levenshtein($str, $value);
+          if ($lev == 0) return $key;
+          if ($lev <= $shortest || $shortest < 0) {
+            $closest = $key;
+            $shortest = $lev;
+          }
+        }
+      }
+      return isset($closest) ? ucwords($closest) : $str;
+    }
 }
