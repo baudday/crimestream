@@ -1,6 +1,6 @@
 @extends('layouts.default')
 @section('head-stuff')
-<link rel="stylesheet" href="css/reports-styles.css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="css/address-lookup.css" media="screen" charset="utf-8">
 @stop
 
 @section('body')
@@ -12,19 +12,19 @@
     <div class="container-fluid map-container">
       <div class="row-fluid">
         <div class="col-xs-12" style="padding-left: 0;">
-          <input type='text' id="address-input" class='form-control input-lg' placeholder='Address' tabindex="1" style="z-index: 99999; position: fixed; left: 10%; width: 80%; margin: 10px; border-radius: 0px;">
+          <input type='text' id="address-input" class='form-control input-lg' placeholder='Address' tabindex="1">
           <div id="map"></div>
         </div>
       </div>
       <div class="row-fluid">
-        <div class="col-xs-12 info" style="display: none; position: fixed; bottom: 0; background: #fff; box-shadow: 0px 1px 3px 1px; padding: 10px;">
+        <div class="col-xs-12 info">
           <div class="container">
             <div class="row">
               <div class="col-sm-8 col-sm-offset-2 col-xs-10 col-xs-offset-1">
-                <h1 id="address"></h1>
+                <h2 id="address"></h2>
                 <hr>
                 <p id="summary"></p>
-                <h2>Top Reports</h2>
+                <h3>Top Reports</h3>
                 <ul id="crime-counts"></ul>
               </div>
             </div>
@@ -49,7 +49,6 @@
   var markers = [];
   $(function() {
     $('#address-input').focus();
-    $('.info-panel').height(window.innerHeight - 70);
     $('#map').height(window.innerHeight - 70);
     window.map = L.map('map').setView([36.1314, -95.9372], 11);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -103,7 +102,7 @@
         });
         return str;
       });
-      $('.info').slideDown(function() { window.map.panBy([0, $('.info').height() / 3]) });
+      $('.info').slideDown(function() { window.map.panBy([0, $(this).height() / 2]) });
       $.each(markers, function(i, m) { window.map.removeLayer(m) });
       markers = [];
       $.each(data.crimes, function(i, crime) {
