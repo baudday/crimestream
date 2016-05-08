@@ -62,10 +62,14 @@
         </div>
       </div>
     </nav>
+    @if (!isset($hide['twitter']))
     <div id="follow-btn-container" style='position: absolute; top: 80px; right: 10px; z-index: 1048;'>
       <a href="https://twitter.com/CrimeStreamBot" onclick="trackOutboundLink('https://twitter.com/CrimeStreamBot', 'twitter-follow-btn')" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false">Follow @CrimeStreamBot</a>
     </div>
+    @endif
+    @if (!isset($hide['donate']))
     <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'coffee')" target='_blank'><img style='position: absolute; bottom: 20px; left: 0; border: 0; z-index: 9999; width: 130px;' src='https://az743702.vo.msecnd.net/cdn/btn3.png' border='0' alt='Buy me a coffee at ko-fi.com' /></a>
+    @endif
     @yield('body')
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
     @yield('body-scripts')

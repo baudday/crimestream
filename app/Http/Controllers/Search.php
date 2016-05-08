@@ -16,7 +16,8 @@ class Search extends Controller
      */
     public function index()
     {
-        return view('address_search');
+        $hide = ['twitter' => true, 'donate' => true];
+        return view('address_search', compact('hide'));
     }
 
     /**
