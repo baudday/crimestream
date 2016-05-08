@@ -107,10 +107,14 @@ class Filter extends Controller
 
       arsort($crime_counts);
 
+      // TODO: Turn average calculation into a job!
+      $average = \App\Crime::where('class', 'serious')->count() / (186.8 / 0.25);
+      $count = count($crimes);
+
       return response()->json([
         'meta' => [
-          'average' => \App\Crime::where('class', 'serious')->count() / (186.8 / 0.25),
-          'counts' => array_merge([ 'total' => count($crimes) ], $crime_counts)
+          'percent' => round(($count / $average) * 100),
+          'counts' => array_merge( [ 'total' => $count ], $crime_counts )
         ],
         'crimes' => $crimes
       ]);

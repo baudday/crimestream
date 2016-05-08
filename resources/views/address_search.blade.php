@@ -91,7 +91,7 @@
     }).success(function(data) {
       $('#address').html(autocomplete.formatted_address);
       $('#address').html(autocomplete.getPlace().formatted_address);
-      $('#summary').html(getSummary(data.meta.counts.total, data.meta.average));
+      $('#summary').html(getSummary(data.meta.percent));
       $('#crime-counts').html('');
       $('#crime-counts').append(function() {
         var str = '';
@@ -115,8 +115,7 @@
     });
   }
 
-  function getSummary(count, average) {
-    var percent = (count / average) * 100;
+  function getSummary(percent) {
     var start = "The number of serious incidents reported within a quarter mile of this location within the last three months is ";
     if (percent < 50)
       return start + "<span style='color: green; font-weight: strong;'>well below average</span>.";
