@@ -10,12 +10,17 @@ class Crime extends Model
 {
     protected $fillable = ['address', 'description', 'class', 'active', 'lat', 'lng'];
 
-    public static function create(array $options = [])
+    public static function firstOrCreate(array $options = [])
     {
+      if (! is_null($instance = self::where($options)->first())) {
+        return $instance;
+      }
+
       $res = Location::geocode($options['address'] . ' Tulsa, OK');
       $geo = $res->results[0]->geometry->location;
       $options['lat'] = $geo->lat;
       $options['lng'] = $geo->lng;
+
       return parent::create($options);
     }
 
