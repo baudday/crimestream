@@ -62,4 +62,39 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function redirectToProvider(\Request $request, $provider)
+    {
+      return \Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback(\Request $request, $provider)
+    {
+      try {
+        $user = \Socialite::driver($provider)->user();
+      }
+      catch (Exception $e) {
+        return \Redirect::to("auth/$provider");
+      }
+
+      $authUser = $this->findOrCreateUser($user, $provider);
+
+      \Auth::login($authUser);
+
+      return \Redirect::to('/');
+    }
+
+    private function findOrCreateUser($providerUser, $provider)
+    {
+      if ($authUser = User::where("{$provider}_id", $providerUser->id)->first()) {
+        return $authUser;
+      }
+
+      return User::create([
+        'name'            => $providerUser->getName(),
+        'email'           => $providerUser->getEmail(),
+        "{$provider}_id"  => $providerUser->getId(),
+        'avatar'          => $providerUser->getAvatar()
+      ]);
+    }
 }

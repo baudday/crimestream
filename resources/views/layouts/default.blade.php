@@ -63,7 +63,8 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-            <li><a href="#">{{ Auth::user()->email }}</a></li>
+            <li><a href="#">{{ Auth::user()->name }}</a></li>
+            <!-- <li><a href="auth/logout">Logout</a></li> -->
             @else
             <li><a id="login" href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
             @endif
@@ -89,20 +90,20 @@
             <h4 class="modal-title">Login</h4>
           </div>
           <div class="modal-body">
-            <div class="row" style="margin-bottom: 10px;">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                <a href="auth/twitter" class="btn btn-lg btn-block btn-social btn-twitter">
+                  <span class="fa fa-twitter"></span> Login with Twitter
+                </a>
+              </div>
+            </div>
+            <!-- <div class="row" style="margin-top: 10px;">
               <div class="col-sm-6 col-sm-offset-3">
                 <a class="btn btn-lg btn-block btn-social btn-facebook">
                   <span class="fa fa-facebook"></span> Login with Facebook
                 </a>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <a class="btn btn-lg btn-block btn-social btn-twitter">
-                  <span class="fa fa-twitter"></span> Login with Twitter
-                </a>
-              </div>
-            </div>
+            </div> -->
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -112,6 +113,11 @@
     </div><!-- /.modal -->
     @endif
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    @if (!Auth::check() && session('showLoginForm'))
+    <script type="text/javascript">
+      $('#loginModal').modal();
+    </script>
+    @endif
     @yield('body-scripts')
   </body>
 </html>

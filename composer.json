@@ -9,7 +9,9 @@
         "laravel/framework": "5.1.*",
         "guzzlehttp/guzzle": "^6.1",
         "abraham/twitteroauth": "^0.6.2",
-        "barryvdh/laravel-cors": "^0.8.0"
+        "barryvdh/laravel-cors": "^0.8.0",
+        "laravel/socialite": "^2.0",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

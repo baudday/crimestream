@@ -11,13 +11,22 @@
 |
 */
 
+Route::group(['middleware' => 'guest'], function() {
+  Route::get('auth/login', function() {
+    return redirect('/')->with('showLoginForm', true);
+  });
+  Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
+  Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
+  Route::get('auth/logout', 'Auth\AuthController@getLogout');
+});
+
 Route::get('/', 'Pages@home');
 
 Route::get('/about', 'Pages@about');
 
 Route::get('/report', 'Report@index');
 
-Route::get('/address-lookup', 'Search@index');
+Route::get('/address-lookup', ['middleware' => 'auth', 'uses' => 'Search@index']);
 
 
 Route::group(['prefix' => 'api'], function() {
