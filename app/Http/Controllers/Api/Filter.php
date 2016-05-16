@@ -45,8 +45,7 @@ class Filter extends Controller
 
       arsort($crime_counts);
 
-      // TODO: Turn average calculation into a job!
-      $average = \App\Crime::where('class', 'serious')->count() / (186.8 / 0.25);
+      $average = Cache::get('crime_average');
       $count = count($crimes);
 
       return response()->json([

@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Inspire::class,
         Commands\DataScrape::class,
         Commands\NotifyTwitter::class,
+        Commands\CalculateAverage::class,
     ];
 
     /**
@@ -30,5 +31,6 @@ class Kernel extends ConsoleKernel
         if (getenv('APP_ENV') == "production") {
           $schedule->command('notify:twitter')->cron('*/6 * * * * *');
         }
+        $schedule->command('calculate:average')->weekly();
     }
 }
