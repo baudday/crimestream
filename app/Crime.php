@@ -35,8 +35,9 @@ class Crime extends Model
           ['description','like','%aslt%'],
           ['description','like','%assault%']
         ],
-        'auto-thefts' =>
-          ['description','like','%theft%'],
+        'auto-thefts' =>[
+          ['description','like','%theft%']
+        ],
         'burglaries' => [
           ['description','like','%vehicle%'],
           ['description','like','%burglary%']
@@ -45,12 +46,15 @@ class Crime extends Model
           ['description','like','%abandoned%'],
           ['description','like','%vehicle%']
         ],
-        'disturbances' =>
-          ['description','like','%disturbance%'],
-        'hit-runs' =>
-          ['description','like','%hit&amp;run%'],
-        'missing-persons' =>
-          ['description','like','%missing%'],
+        'disturbances' => [
+          ['description','like','%disturbance%']
+        ],
+        'hit-runs' => [
+          ['description','like','%hit&amp;run%']
+        ],
+        'missing-persons' => [
+          ['description','like','%missing%']
+        ],
         'shootings' => [
           ['description','like','%shot%'],
           ['description','like','%shooting%']
