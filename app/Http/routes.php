@@ -24,9 +24,19 @@ Route::get('/', 'Pages@home');
 
 Route::get('/about', 'Pages@about');
 
-Route::get('/report', 'Report@index');
+Route::group(['middleware' => 'auth'], function() {
+  Route::get('/address-lookup', 'Search@index');
+  Route::get('/heatmaps', 'Report@index');
+  Route::get('/account', 'UsersController@edit');
+  Route::put('/user/{id}', 'UsersController@update');
 
-Route::get('/address-lookup', ['middleware' => 'auth', 'uses' => 'Search@index']);
+  Route::group(['prefix' => 'subscription'], function() {
+    Route::post('create', 'SubscriptionsController@create');
+    Route::get('cancel', 'SubscriptionsController@cancel');
+    Route::get('resume', 'SubscriptionsController@resume');
+    Route::put('update', 'SubscriptionsController@update');
+  });
+});
 
 
 Route::group(['prefix' => 'api'], function() {
@@ -42,3 +52,8 @@ Route::group(['prefix' => 'api'], function() {
 
 
 });
+
+Route::post(
+  'stripe/webhook',
+  '\Laravel\Cashier\Http\Controllers\WebhookController@handleWebhook'
+);

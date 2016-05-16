@@ -57,14 +57,19 @@
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li><a href="report">Reports</a></li>
-            <li><a href="about">About</a></li>
+            <li><a href="/about">About</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/address-lookup">Address Search</a></li>
+                <li><a href="/heatmaps">Heatmaps</a></li>
+              </ul>
+            </li>
             <li><a target="_blank" onclick="trackOutboundLink('https://citygram.org/tulsa', 'alerts-btn')" href="//citygram.org/tulsa">Text Message Alerts!</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
-            <li><a href="#">{{ Auth::user()->name }}</a></li>
-            <!-- <li><a href="auth/logout">Logout</a></li> -->
+            <li><a href="/account"><img height="20" src="{{ Auth::user()->avatar }}" class="img-circle"> Account</a></li>
             @else
             <li><a id="login" href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
             @endif
@@ -72,14 +77,6 @@
         </div>
       </div>
     </nav>
-    @if (!isset($hide['twitter']))
-    <div id="follow-btn-container" style='position: absolute; top: 80px; right: 10px; z-index: 1048;'>
-      <a href="https://twitter.com/CrimeStreamBot" onclick="trackOutboundLink('https://twitter.com/CrimeStreamBot', 'twitter-follow-btn')" class="twitter-follow-button" data-show-count="false" data-size="large" data-show-screen-name="false">Follow @CrimeStreamBot</a>
-    </div>
-    @endif
-    @if (!isset($hide['donate']))
-    <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'coffee')" target='_blank'><img style='position: absolute; bottom: 20px; left: 0; border: 0; z-index: 9999; width: 130px;' src='https://az743702.vo.msecnd.net/cdn/btn3.png' border='0' alt='Buy me a coffee at ko-fi.com' /></a>
-    @endif
     @yield('body')
     @if (!Auth::check())
     <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">

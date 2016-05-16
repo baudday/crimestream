@@ -48,26 +48,6 @@
   </div>
 </div>
 
-<div id="donateModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Hey, freedom ain't free...</h4>
-      </div>
-      <div class="modal-body">
-        <p>And apparently neither is server time. So if you appreciate this
-          service, please consider
-          <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'donate')" target='_blank'>donating</a>
-          to help keep it alive. Thanks!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Nah, I'm good</button>
-        <a id="donate" href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'donate')" target='_blank' class="btn btn-primary">Donate</a>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 @stop
 
 @section('body-scripts')
@@ -80,7 +60,6 @@
     if ($(window).width() < 768) {
       $("#wrapper").toggleClass("toggled");
     }
-    $('#donateModal').modal();
     $('.info-panel').height(window.innerHeight - 70);
     $('#map').height(window.innerHeight - 70);
     drawMap();
@@ -96,10 +75,6 @@
     $(this).addClass('active');
     draw(slug);
     return false;
-  });
-
-  $('#donate').on('click', function() {
-    $('#donateModal').modal('hide');
   });
 
   $("#menu-toggle").click(function(e) {
