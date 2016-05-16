@@ -94,13 +94,13 @@
                 </a>
               </div>
             </div>
-            <!-- <div class="row" style="margin-top: 10px;">
+            <div class="row" style="margin-top: 10px;">
               <div class="col-sm-6 col-sm-offset-3">
-                <a class="btn btn-lg btn-block btn-social btn-facebook">
+                <a href="auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
                   <span class="fa fa-facebook"></span> Login with Facebook
                 </a>
               </div>
-            </div> -->
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

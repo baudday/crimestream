@@ -10,7 +10,7 @@
 <div class="container" style="margin-top: 60px;">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-      <h3><img class="img-circle" src="{{ $user->avatar }}" /> {{ $user->name }}'s Account</h3>
+      <h3><img class="img-circle" src="{{ $user->avatar }}" /> My Account</h3>
       <hr>
       @if (session('update_success'))
       <div class="alert alert-success">{{ session('update_success') }}</div>
@@ -45,29 +45,32 @@
       </form>
 
       <hr>
-      <h4>
-        Subscription
+      <h4>Subscription</h4>
         @if ($user->subscribed('main'))
           @if ($user->subscription('main')->onTrial())
-          <span class="label label-warning">Trial ends {{ date('M d, Y', strtotime($user->subscription('main')->trial_ends_at)) }}</span>
+          <h4><span class="label label-warning">Trial ends {{ date('M d, Y', strtotime($user->subscription('main')->trial_ends_at)) }}</span></h4>
             @if ($user->subscription('main')->cancelled())
-            <a href="/subscription/resume" class="btn btn-sm btn-success">Resume Subscription</a>
+            <a href="/subscription/resume" class="btn btn-success">Resume Subscription</a>
             @else
-            <a href="/subscription/cancel" class="btn btn-sm btn-danger">Cancel Subscription</a>
+            <a href="/subscription/cancel" class="btn btn-danger">Cancel Subscription</a>
             @endif
 
           @elseif ($user->subscription('main')->onGracePeriod())
-          <span class="label label-warning">Active until {{ date('M d, Y', strtotime($user->subscription('main')->ends_at)) }}</span> <a href="/subscription/resume" class="btn btn-sm btn-success">Resume Subscription</a>
+          <h4><span class="label label-warning">Active until {{ date('M d, Y', strtotime($user->subscription('main')->ends_at)) }}</span></h4>
+          <a href="/subscription/resume" class="btn btn-success">Resume Subscription</a>
 
           @else
-          <span class="label label-success">Active</span> <a href="/subscription/cancel" class="btn btn-sm btn-danger">Cancel Subscription</a>
+          <h4><span class="label label-success">Active</span></h4>
+          <a href="/subscription/cancel" class="btn btn-danger">Cancel Subscription</a>
           @endif
 
         @else
-        <span class="label label-default">Unsubscribed</span>
+        <h4><span class="label label-default">Unsubscribed</span></h4>
         @endif
-      </h4>
 
+      <hr>
+
+      <h4>Payment</h4>
       <form id="payment-form" action="@if ($user->subscribed('main'))/subscription/update @else/subscription/create @endif" method="post">
         {!! csrf_field() !!}
         @if ($user->subscribed('main'))

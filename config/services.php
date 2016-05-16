@@ -38,7 +38,13 @@ return [
     'twitter' => [
       'client_id' => env('TWITTER_CONSUMER_KEY'),
       'client_secret' => env('TWITTER_CONSUMER_SECRET'),
-      'redirect' => 'http://crimestream.app/auth/twitter/callback'
+      'redirect' => url('/auth/twitter/callback')
+    ],
+
+    'facebook' => [
+      'client_id' => env('FB_APP_ID'),
+      'client_secret' => env('FB_APP_SECRET'),
+      'redirect' => url('/auth/facebook/callback')
     ]
 
 ];
