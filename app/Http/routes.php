@@ -25,8 +25,6 @@ Route::get('/', 'Pages@home');
 Route::get('/about', 'Pages@about');
 
 Route::group(['middleware' => 'auth'], function() {
-  Route::get('/address-lookup', 'Search@index');
-  Route::get('/heatmaps', 'Report@index');
   Route::get('/account', 'UsersController@edit');
   Route::put('/user/{id}', 'UsersController@update');
 
@@ -35,6 +33,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('cancel', 'SubscriptionsController@cancel');
     Route::get('resume', 'SubscriptionsController@resume');
     Route::put('update', 'SubscriptionsController@update');
+  });
+
+  Route::group(['middleware' => 'subscribed'], function() {
+    Route::get('/address-search', 'Search@index');
+    Route::get('/heatmaps', 'Report@index');
   });
 });
 

@@ -57,15 +57,15 @@
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
             <li><a href="/">Home</a></li>
-            <li><a href="/about">About</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="/address-lookup">Address Search</a></li>
+                <li><a href="/address-search">Address Search</a></li>
                 <li><a href="/heatmaps">Heatmaps</a></li>
               </ul>
             </li>
-            <li><a target="_blank" onclick="trackOutboundLink('https://citygram.org/tulsa', 'alerts-btn')" href="//citygram.org/tulsa">Text Message Alerts!</a></li>
+            <li><a target="_blank" onclick="trackOutboundLink('https://citygram.org/tulsa', 'alerts-btn')" href="//citygram.org/tulsa">SMS Alerts</a></li>
+            <li><a href="/about">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             @if (Auth::check())
