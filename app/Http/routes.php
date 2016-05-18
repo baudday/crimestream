@@ -11,13 +11,17 @@
 |
 */
 
+Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::group(['middleware' => 'guest'], function() {
-  Route::get('auth/login', function() {
-    return redirect('/')->with('showLoginForm', true);
-  });
+  // Authentication routes...
+  Route::get('auth/login', 'Auth\AuthController@getLogin');
+  Route::post('auth/login', 'Auth\AuthController@postLogin');
+
+  // Registration routes...
+  Route::get('auth/register', 'Auth\AuthController@getRegister');
+  Route::post('auth/register', 'Auth\AuthController@postRegister');
   Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
   Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
-  Route::get('auth/logout', 'Auth\AuthController@getLogout');
 });
 
 Route::get('/', 'Pages@home');

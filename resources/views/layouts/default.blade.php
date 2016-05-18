@@ -71,7 +71,7 @@
             @if (Auth::check())
             <li><a href="/account"><img height="20" src="{{ Auth::user()->avatar }}" class="img-circle"> Account</a></li>
             @else
-            <li><a id="login" href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
+            <li><a id="login" href="#" data-toggle="modal" data-target="#loginModal">Login / Register</a></li>
             @endif
           </ul>
         </div>
@@ -82,39 +82,14 @@
     <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">Login</h4>
-          </div>
           <div class="modal-body">
-            <div class="row">
-              <div class="col-sm-6 col-sm-offset-3">
-                <a href="auth/twitter" class="btn btn-lg btn-block btn-social btn-twitter">
-                  <span class="fa fa-twitter"></span> Login with Twitter
-                </a>
-              </div>
-            </div>
-            <div class="row" style="margin-top: 10px;">
-              <div class="col-sm-6 col-sm-offset-3">
-                <a href="auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
-                  <span class="fa fa-facebook"></span> Login with Facebook
-                </a>
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            @include('partials.login')
           </div>
         </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     @endif
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    @if (!Auth::check() && session('showLoginForm'))
-    <script type="text/javascript">
-      $('#loginModal').modal();
-    </script>
-    @endif
     @yield('body-scripts')
   </body>
 </html>

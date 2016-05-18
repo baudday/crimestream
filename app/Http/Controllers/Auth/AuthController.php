@@ -23,6 +23,8 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+    protected $redirectPath = '/account';
+
     /**
      * Create a new authentication controller instance.
      *
@@ -56,10 +58,12 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $hash = md5($data['email']);
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'avatar' => "//www.gravatar.com/avatar/$hash?d=mm"
         ]);
     }
 
