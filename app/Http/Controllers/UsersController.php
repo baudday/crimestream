@@ -74,7 +74,7 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-          'email' => 'email|max:255',
+          'email' => 'email|max:255|unique:users,email,' . $id,
           'name' => 'max:255'
         ]);
         $user = \Auth::user();
