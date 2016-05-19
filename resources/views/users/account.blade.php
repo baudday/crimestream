@@ -10,7 +10,12 @@
 <div class="container" style="margin-top: 60px;">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-      <h3><img class="img-circle" src="{{ $user->avatar }}" /> My Account</h3>
+      <h3>
+        <img class="img-circle" src="{{ $user->avatar }}" /> My Account
+        <span class="pull-right">
+          <a href="/auth/logout" class="btn btn-danger">Logout</a>
+        </span>
+      </h3>
       <hr>
       @if (session('update_success'))
       <div class="alert alert-success">{{ session('update_success') }}</div>
@@ -40,6 +45,7 @@
         <div class='form-group'>
           <label for="email">Email</label>
           <input name="email" id="email" type='text' class='form-control input-lg' placeholder='Email' value="{{ $user->email }}" tabindex="1">
+          <small><i>Changing this will change your login email!</i></small>
         </div>
         <button type='submit' class='btn btn-lg btn-default' tabindex="2">Update</button>
       </form>
