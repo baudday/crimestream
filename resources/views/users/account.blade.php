@@ -17,6 +17,15 @@
         </span>
       </h3>
       <hr>
+      @if (!$user->onTrial('main'))
+      <div class="alert alert-success">
+        <strong>
+          Please fill out your payment info to begin your free 7-day trial. We
+          won't charge you until
+          <i>{{ date('l F j', strtotime(\Carbon\Carbon::now()->addDays(7))) }}</i>
+        </strong>
+      </div>
+      @endif
       @if (session('update_success'))
       <div class="alert alert-success">{{ session('update_success') }}</div>
       @endif
@@ -34,23 +43,6 @@
       @endif
     </div>
     <div class="col-sm-8 col-sm-offset-2">
-      <h4>General</h4>
-      <form action="/user/{{ $user->id }}" method="post">
-        {!! csrf_field() !!}
-        {!! method_field('put') !!}
-        <div class='form-group'>
-          <label for="name">Name</label>
-          <input name="name" id="name" type='text' class='form-control input-lg' placeholder='Name' value="{{ $user->name }}" tabindex="1">
-        </div>
-        <div class='form-group'>
-          <label for="email">Email</label>
-          <input name="email" id="email" type='text' class='form-control input-lg' placeholder='Email' value="{{ $user->email }}" tabindex="1">
-          <small><i>Changing this will change your login email!</i></small>
-        </div>
-        <button type='submit' class='btn btn-lg btn-default' tabindex="2">Update</button>
-      </form>
-
-      <hr>
       <h4>Subscription</h4>
         @if ($user->subscribed('main'))
           @if ($user->subscription('main')->onTrial())
@@ -132,12 +124,34 @@
           <div class="col-xs-12">
           @if ($user->subscribed('main'))
           <button tabindex="4" type="submit" class="btn btn-lg btn-default submit">Update Card</button>
+          @elseif (!$user->onTrial('main'))
+          <button tabindex="4" type="submit" class="btn btn-lg btn-success submit">Begin Trial</button>
           @else
           <button tabindex="4" type="submit" class="btn btn-lg btn-success submit">Subscribe</button>
           @endif
           </div>
         </div>
       </form>
+
+      <hr>
+
+      <h4>General</h4>
+      <form action="/user/{{ $user->id }}" method="post">
+        {!! csrf_field() !!}
+        {!! method_field('put') !!}
+        <div class='form-group'>
+          <label for="name">Name</label>
+          <input name="name" id="name" type='text' class='form-control input-lg' placeholder='Name' value="{{ $user->name }}" tabindex="1">
+        </div>
+        <div class='form-group'>
+          <label for="email">Email</label>
+          <input name="email" id="email" type='text' class='form-control input-lg' placeholder='Email' value="{{ $user->email }}" tabindex="1">
+          <small><i>Changing this will change your login email!</i></small>
+        </div>
+        <button type='submit' class='btn btn-lg btn-default' tabindex="2">Update</button>
+      </form>
+
+      <hr>
     </div>
   </div>
 </div>

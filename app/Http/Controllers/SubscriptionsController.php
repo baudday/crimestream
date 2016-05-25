@@ -19,7 +19,7 @@ class SubscriptionsController extends Controller
         $user->newSubscription('main', 'cs-basic')
           ->trialDays(7)
           ->create($creditCardToken);
-        $request->session()->flash('update_success', 'Thanks for trying CrimeStream! You will be billed after your 7-day trial has ended on ' . date('M d, Y', strtotime($user->subscription('main')->trial_ends_at)));
+        $request->session()->flash('update_success', 'Thanks for trying CrimeStream! You will be billed $5 after your 7-day trial has ended on ' . date('M d, Y', strtotime($user->subscription('main')->trial_ends_at)));
         return redirect('/account');
     }
 
@@ -41,7 +41,7 @@ class SubscriptionsController extends Controller
         $user = \Auth::user();
         $user->subscription('main')->resume();
         $ends_at = is_null($user->subscription('main')->ends_at) ? $user->subscription('main')->trial_ends_at : $user->subscription('main')->ends_at;
-        $request->session()->flash('update_success', 'Subscription resumed! You will be billed on ' . date('M d, Y', strtotime($ends_at)));
+        $request->session()->flash('update_success', 'Subscription resumed! You will be billed $5 on ' . date('M d, Y', strtotime($ends_at)));
         return redirect('/account');
     }
 

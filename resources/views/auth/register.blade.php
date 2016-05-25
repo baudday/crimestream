@@ -6,6 +6,9 @@
     <div class="col-sm-6 col-sm-offset-3">
       <div class="panel panel-default">
         <div class="panel-body">
+          @if (session('trial_msg'))
+          <div class="alert alert-success"><strong>{{ session('trial_msg') }}</strong></div>
+          @endif
           <form method="post" action="/auth/register">
             <legend>Register</legend>
 
@@ -43,6 +46,22 @@
 
             <button type='submit' class='btn btn-lg btn-default'>Register</button>
           </form>
+
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-8 col-sm-offset-2">
+              <a href="/auth/twitter" class="btn btn-lg btn-block btn-social btn-twitter">
+                <span class="fa fa-twitter"></span> Login with Twitter
+              </a>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 10px;">
+            <div class="col-sm-8 col-sm-offset-2">
+              <a href="/auth/facebook" class="btn btn-lg btn-block btn-social btn-facebook">
+                <span class="fa fa-facebook"></span> Login with Facebook
+              </a>
+            </div>
         </div>
       </div>
     </div>

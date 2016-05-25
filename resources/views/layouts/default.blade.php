@@ -56,7 +56,10 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
           <ul class="nav navbar-nav">
+            @if (!\Auth::check() || !\Auth::user()->subscribed('main'))
             <li><a href="/">Home</a></li>
+            @endif
+            <li><a href="/map">Map</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Reporting <span class="caret"></span></a>
               <ul class="dropdown-menu">

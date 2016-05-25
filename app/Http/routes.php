@@ -22,10 +22,12 @@ Route::group(['middleware' => 'guest'], function() {
   Route::post('auth/register', 'Auth\AuthController@postRegister');
   Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
   Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
+
+  Route::get('/trial', 'Pages@trial');
 });
 
 Route::get('/', 'Pages@home');
-
+Route::get('/map', 'Pages@map');
 Route::get('/about', 'Pages@about');
 
 Route::group(['middleware' => 'auth'], function() {
