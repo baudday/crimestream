@@ -19,7 +19,7 @@
       <div class="col-sm-4">
         <div class="row">
           <div class="col-sm-12">
-            <h1>Address Search</h1>
+            <h1><img height="50" src="/img/search.png" /> Address Search</h1>
             <hr>
             <p>
               Enter an address and we'll give you a breakdown of
@@ -28,7 +28,7 @@
             </p>
           </div>
           <div class="col-sm-12">
-            <h1>Heatmaps</h1>
+            <h1><img height="50" src="/img/heat.png" /> Heatmaps</h1>
             <hr>
             <p>
               Analyze a breakdown of calls by category and see where the
