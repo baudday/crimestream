@@ -13,7 +13,7 @@
         <div class="jumbotron" style="text-align: center; margin-bottom: 0; padding-top:0; padding-bottom: 0;">
             <h1 style="font-family: Bangers;">CrimeStream Plus</h1>
             <p>Get insight into crime in Tulsa for only $5 a month.</p>
-            <p><a class="btn btn-primary btn-lg" href="/trial" role="button">Try Free for 7 Days</a></p>
+            <p><a class="btn btn-info btn-lg" href="/trial" role="button">Try Free for 7 Days</a></p>
         </div>
       </div>
       <div class="col-sm-4">
