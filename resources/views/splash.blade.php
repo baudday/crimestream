@@ -31,7 +31,7 @@
             <h1><img height="50" src="/img/heat.png" /> Heatmaps</h1>
             <hr>
             <p>
-              Analyze a breakdown of calls by category and see where the
+              Analyze heatmaps of calls by category and see where the
               hotspots are for everything from disturbances to burglaries.
             </p>
           </div>

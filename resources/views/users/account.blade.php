@@ -48,21 +48,21 @@
           @if ($user->subscription('main')->onTrial())
           <h4><span class="label label-warning">Trial ends {{ date('M d, Y', strtotime($user->subscription('main')->trial_ends_at)) }}</span></h4>
             @if ($user->subscription('main')->cancelled())
-            <a href="/subscription/resume" class="btn btn-success">Resume Subscription</a>
+            <a href="#" data-href="/subscription/resume" class="btn btn-success" data-toggle="modal" data-target="#confirmModal" data-action="resume">Resume Subscription</a>
             @else
-            <a href="/subscription/cancel" class="btn btn-danger">Cancel Subscription</a>
+            <a href="#" data-href="/subscription/cancel" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal" data-action="cancel">Cancel Subscription</a>
             @endif
 
           @elseif ($user->subscription('main')->onGracePeriod())
           <h4><span class="label label-warning">Active until {{ date('M d, Y', strtotime($user->subscription('main')->ends_at)) }}</span></h4>
-          <a href="/subscription/resume" class="btn btn-success">Resume Subscription</a>
+          <a href="#" data-href="/subscription/resume" class="btn btn-success" data-toggle="modal" data-target="#confirmModal" data-action="resume">Resume Subscription</a>
 
           @elseif ($user->subscription('main')->cancelled())
           <h4><span class="label label-default">Unsubscribed</span></h4>
 
           @else
           <h4><span class="label label-success">Active</span></h4>
-          <a href="/subscription/cancel" class="btn btn-danger">Cancel Subscription</a>
+          <a href="#" data-href="/subscription/cancel" class="btn btn-danger" data-toggle="modal" data-target="#confirmModal" data-action="cancel">Cancel Subscription</a>
           @endif
 
         @else
@@ -158,12 +158,38 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div id="confirmModal" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        Are you sure you want to <span id='action'></span> your subscription?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <a id="confirmBtn" class="btn btn-primary">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 @stop
 
 @section('body-scripts')
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
   Stripe.setPublishableKey('{{ env("STRIPE_API_KEY") }}');
+  $(function() {
+    $('#confirmModal').on('show.bs.modal', function(e) {
+      var btn = $(e.relatedTarget);
+      var action = btn.data('action');
+      var href = btn.data('href');
+      var modal = $(this);
+      modal.find('#confirmBtn').attr('href', href);
+      modal.find('#action').text(action);
+    });
+  });
 </script>
 <script type="text/javascript" src="/js/subscriptions.js"></script>
 @stop
