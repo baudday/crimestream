@@ -7,7 +7,7 @@
   width: 100%;
   z-index: -1;
   position: fixed;
-  background: url('/img/splash_header_thumb.jpg') no-repeat 0 center fixed;
+  background: url('/img/bg_alt_th.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
