@@ -16,10 +16,21 @@ class SubscriptionsController extends Controller
     {
         $user = \Auth::user();
         $creditCardToken = $request->input('stripeToken');
-        $user->newSubscription('main', 'cs-basic')
-          ->trialDays(7)
-          ->create($creditCardToken);
-        $request->session()->flash('update_success', 'Thanks for trying CrimeStream! You will be billed $5 after your 7-day trial has ended on ' . date('M d, Y', strtotime($user->subscription('main')->trial_ends_at)));
+
+        // Never been subscribed so do a 7-day trial first
+        if (is_null($user->subscription('main'))) {
+          $user->newSubscription('main', 'cs-basic')
+            ->trialDays(7)
+            ->create($creditCardToken);
+          $msg = 'Thanks for trying CrimeStream! You will be billed $5 after your 7-day trial has ended.';
+        }
+        else {
+          $user->newSubscription('main', 'cs-basic')
+            ->create($creditCardToken);
+          $msg = 'Thanks for subscribing to CrimeStream! You have been billed $5.';
+        }
+
+        $request->session()->flash('update_success', $msg);
         return redirect('/account');
     }
 

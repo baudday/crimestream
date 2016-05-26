@@ -60,8 +60,7 @@ class UsersController extends Controller
     public function edit()
     {
         $user = \Auth::user();
-        $hide = ['twitter' => true, 'donate' => true];
-        return view('users/account', compact('user', 'hide'));
+        return view('users/account', compact('user'));
     }
 
     /**

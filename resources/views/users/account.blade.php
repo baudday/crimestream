@@ -17,7 +17,7 @@
         </span>
       </h3>
       <hr>
-      @if (!$user->onTrial('main'))
+      @if (neverSubscribed($user))
       <div class="alert alert-success">
         <strong>
           Please fill out your payment info to begin your free 7-day trial. We
@@ -44,7 +44,7 @@
     </div>
     <div class="col-sm-8 col-sm-offset-2">
       <h4>Subscription</h4>
-        @if ($user->subscribed('main'))
+        @if ($user->subscription('main'))
           @if ($user->subscription('main')->onTrial())
           <h4><span class="label label-warning">Trial ends {{ date('M d, Y', strtotime($user->subscription('main')->trial_ends_at)) }}</span></h4>
             @if ($user->subscription('main')->cancelled())
@@ -56,6 +56,9 @@
           @elseif ($user->subscription('main')->onGracePeriod())
           <h4><span class="label label-warning">Active until {{ date('M d, Y', strtotime($user->subscription('main')->ends_at)) }}</span></h4>
           <a href="/subscription/resume" class="btn btn-success">Resume Subscription</a>
+
+          @elseif ($user->subscription('main')->cancelled())
+          <h4><span class="label label-default">Unsubscribed</span></h4>
 
           @else
           <h4><span class="label label-success">Active</span></h4>
@@ -124,7 +127,7 @@
           <div class="col-xs-12">
           @if ($user->subscribed('main'))
           <button tabindex="4" type="submit" class="btn btn-lg btn-default submit">Update Card</button>
-          @elseif (!$user->onTrial('main'))
+          @elseif (neverSubscribed($user))
           <button tabindex="4" type="submit" class="btn btn-lg btn-success submit">Begin Trial</button>
           @else
           <button tabindex="4" type="submit" class="btn btn-lg btn-success submit">Subscribe</button>
