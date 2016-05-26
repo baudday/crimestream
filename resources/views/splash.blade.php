@@ -48,7 +48,7 @@
     var img = $('.bg-img');
     var downloadingImg = new Image();
 
-    downloadingImg.src = '/img/bg_alt.jpg';
+    downloadingImg.src = '/img/bg.jpg';
 
     downloadingImg.onload = function() {
       img.css({
