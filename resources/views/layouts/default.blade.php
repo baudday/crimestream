@@ -74,7 +74,7 @@
             @if (Auth::check())
             <li><a href="/account"><img height="20" src="{{ Auth::user()->avatar }}" class="img-circle"> Account</a></li>
             @else
-            <li><a id="login" href="#" data-toggle="modal" data-target="#loginModal">Login / Register</a></li>
+            <li><a id="login" href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
             @endif
           </ul>
         </div>
