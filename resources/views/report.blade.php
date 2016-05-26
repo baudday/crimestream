@@ -1,77 +1,7 @@
 @extends('layouts.default')
 @section('head-stuff')
 <link rel="stylesheet" href="css/simple-sidebar.css">
-<style>
-  #map { position:fixed; top:70px; bottom:0; width:100%; }
-  .toast-top-right { margin-top: 70px; }
-  #toast-container { z-index: 1048; }
-  body {
-    overflow-y: hidden;
-    margin-top: 70px;
-  }
-  .filter-panel {
-    overflow-y: scroll;
-  }
-  .overlay{
-    text-align: center;
-    margin-top: 70px;
-    opacity:0.8;
-    background-color:#ccc;
-    position:fixed;
-    width:100%;
-    height:100%;
-    top:0px;
-    left:0px;
-    z-index:1029;
-  }
-  .helper {
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-  }
-
-  .loader {
-    vertical-align: middle;
-    width: 50px;
-    height: 50px;
-  }
-
-  .map-container {
-    margin: 0px;
-    padding: 0;
-  }
-
-  #wrapper {
-    position: fixed;
-    top: 70px;
-  }
-
-  #sidebar-wrapper {
-    background: #fff;
-  }
-
-  .sidebar-container {
-    margin: 0;
-    padding: 0;
-  }
-
-  #page-content-wrapper {
-    padding: 0;
-  }
-  .expand-btn {
-    z-index: 99999;
-    background: #34495e;
-    position: fixed;
-    top: 50%;
-    padding: 5px;
-    padding-left: 0;
-    border-radius: 0px 30px 30px 0;
-  }
-
-  .expand-img {
-    transform: rotate(270deg);
-  }
-</style>
+<link rel="stylesheet" href="css/reports-styles.css" media="screen" charset="utf-8">
 @stop
 
 @section('body')
@@ -79,7 +9,7 @@
   <div class="overlay">
     <span class="helper"></span><img class="loader" src="img/loader.gif">
   </div>
-  <div class="filter-panel" id="sidebar-wrapper">
+  <div class="info-panel" id="sidebar-wrapper">
     <div class="sidebar-container">
       <div class="container-fluid sidebar-container">
         <div class="row-fluid">
@@ -118,26 +48,6 @@
   </div>
 </div>
 
-<div id="donateModal" class="modal fade" tabindex="-1" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Hey, freedom ain't free...</h4>
-      </div>
-      <div class="modal-body">
-        <p>And apparently neither is server time. So if you appreciate this
-          service, please consider
-          <a href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'donate')" target='_blank'>donating</a>
-          to help keep it alive. Thanks!</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Nah, I'm good</button>
-        <a id="donate" href='http://ko-fi.com?i=115Z8K8YWIQP' onclick="trackOutboundLink('http://ko-fi.com?i=115Z8K8YWIQP', 'donate')" target='_blank' class="btn btn-primary">Donate</a>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 @stop
 
 @section('body-scripts')
@@ -150,8 +60,7 @@
     if ($(window).width() < 768) {
       $("#wrapper").toggleClass("toggled");
     }
-    $('#donateModal').modal();
-    $('.filter-panel').height(window.innerHeight - 70);
+    $('.info-panel').height(window.innerHeight - 70);
     $('#map').height(window.innerHeight - 70);
     drawMap();
     draw();
@@ -166,10 +75,6 @@
     $(this).addClass('active');
     draw(slug);
     return false;
-  });
-
-  $('#donate').on('click', function() {
-    $('#donateModal').modal('hide');
   });
 
   $("#menu-toggle").click(function(e) {
@@ -198,7 +103,7 @@
       var points = [];
 
       // Filter out improperly mapped accidents
-      if(slug == "accidents") data = _.reject(data, function(el) {
+      if(slug == "accidents" || slug == "hit-runs") data = _.reject(data, function(el) {
         return el.lat == 36.1539816 && el.lng == -95.992775;
       });
 

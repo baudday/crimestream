@@ -10,14 +10,29 @@ use App\Http\Controllers\Controller;
 class Pages extends Controller
 {
 
-    public function home()
+    public function home(Request $request)
     {
-        return view('home');
+        if (\Auth::check() && \Auth::user()->subscribed('main')) {
+          return view('map');
+        }
+
+        return view('splash');
     }
 
     public function about()
     {
         return view('about');
+    }
+
+    public function map()
+    {
+      return view('map');
+    }
+
+    public function trial(Request $request)
+    {
+      $request->session()->flash('trial_msg', 'Please register to begin your free 7-day trial');
+      return view('auth/register');
     }
 
 }

@@ -1,0 +1,43 @@
+#map { position:fixed; top:70px; bottom:0; width:100%; }
+
+.toast-top-right { margin-top: 70px; }
+
+#toast-container { z-index: 1048; }
+
+body {
+  overflow-y: hidden;
+  margin-top: 70px;
+}
+
+.map-container {
+  margin: 0px;
+  padding: 0;
+}
+
+#wrapper {
+  position: fixed;
+  top: 70px;
+}
+
+#page-content-wrapper {
+  padding: 0;
+}
+
+.info {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+  box-shadow: 0px 1px 3px 1px;
+  padding: 10px;
+  max-height: 50%;
+  overflow-y: auto;
+}
+
+#address-input {
+  z-index: 99999;
+  position: fixed;
+  left: 10%;
+  width: 80%;
+  margin: 10px;
+}

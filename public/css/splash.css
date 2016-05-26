@@ -1,0 +1,50 @@
+.body {
+  color: #fff;
+}
+
+.bg-img {
+  height: 100vh;
+  width: 100%;
+  z-index: -1;
+  position: fixed;
+  background: url('/img/bg_th.jpg') no-repeat center 0 fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  color: #fff;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.bg-img:before {
+  content: " ";
+  z-index: 10;
+  display: block;
+  position: absolute;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.jumbotron {
+  background: none;
+}
+
+.vcenter {
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 100vh; /* These two lines are counted as one :-)       */
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 991px) {
+  .body {
+    margin-top: 70px;
+  }
+}
