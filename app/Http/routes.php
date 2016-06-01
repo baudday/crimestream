@@ -29,6 +29,7 @@ Route::group(['middleware' => 'guest'], function() {
 Route::get('/', 'Pages@home');
 Route::get('/map', 'Pages@map');
 Route::get('/about', 'Pages@about');
+Route::get('/report', 'Pages@home');
 
 Route::group(['middleware' => 'auth'], function() {
   Route::get('/account', 'UsersController@edit');
