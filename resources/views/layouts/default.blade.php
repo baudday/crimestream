@@ -9,6 +9,16 @@
     <meta name="msapplication-navbutton-color" content="#34495e">
     <!-- iOS Safari -->
     <meta name="apple-mobile-web-app-status-bar-style" content="#34495e">
+
+    <!-- Crawler stuff -->
+    <meta name="Description" content="Get insight into crime in Tulsa for only $5 a month.">
+    <meta name="og:url" content="{{ \Request::url() }}">
+    <meta name="og:title" content="Tulsa CrimeStream">
+    <meta name="og:description" content="Get insight into crime in Tulsa for only $5 a month.">
+    <meta name="og:site_name" content="CrimeStream">
+    <meta name="og:image" content="{{ \URL::to('/img/logo.png') }}">
+    <meta name="og:image:width" content="500">
+    <meta name="og:image:height" content="500">
     <title>CrimeStream</title>
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
