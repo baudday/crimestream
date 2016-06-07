@@ -77,7 +77,7 @@
                 <li><a href="/heatmaps">Heatmaps</a></li>
               </ul>
             </li>
-            <li><a target="_blank" onclick="trackOutboundLink('https://citygram.org/tulsa', 'alerts-btn')" href="//citygram.org/tulsa">SMS Alerts</a></li>
+            <li><a target="_blank" onclick="trackOutboundLink('http://citygram.org/tulsa', 'alerts-btn')" href="//citygram.org/tulsa">SMS Alerts</a></li>
             <li><a href="/about">About</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
