@@ -26,6 +26,25 @@ class Crime extends Model
 
     public function scopeLikeSlug($query, $slug)
     {
+      // Only get the last 3 months of data. Should be plenty
+      return $query->select('*')
+        ->where('created_at', '>=', Carbon::now()->subMonths(3)->toDateTimeString())
+        ->where(function ($q) use ($slug) {
+          foreach($this->getFiltersForSlug($slug) as $condition) {
+            call_user_func_array([$q, 'orWhere'], $condition);
+          }
+        });
+    }
+
+    public function scopeNear($query, $lat, $lng, $distance = 0.25)
+    {
+      return $query->having('distance','<=', $distance)
+               ->select(\DB::raw($this->getRadiusQueryForCoords($lat, $lng)))
+               ->orderBy('distance','asc');
+    }
+
+    private function getFiltersForSlug($slug)
+    {
       $filters = [
         'accidents' => [
           ['description','like','%inj%'],
@@ -61,24 +80,16 @@ class Crime extends Model
         ]
       ];
 
-      // Only get the last 3 months of data. Should be plenty
-      return $query->select('*')
-        ->where('created_at', '>=', Carbon::now()->subMonths(3)->toDateTimeString())
-        ->where(function ($q) use ($filters, $slug) {
-          foreach($filters[$slug] as $condition) {
-              call_user_func_array([$q, 'orWhere'], $condition);
-          }
-        });
+      return $filters[$slug];
     }
 
-    public function scopeNear($query, $lat, $lng, $distance = 0.25)
+    private function getRadiusQueryForCoords($lat, $lng)
     {
-      return $query->having('distance','<=', $distance)->select(\DB::raw("*,
+      return "*,
         (3963.17 * ACOS(COS(RADIANS($lat))
           * COS(RADIANS(lat))
           * COS(RADIANS($lng) - RADIANS(lng))
           + SIN(RADIANS($lat))
-          * SIN(RADIANS(lat)))) AS distance")
-        )->orderBy('distance','asc');
+          * SIN(RADIANS(lat)))) AS distance";
     }
 }
