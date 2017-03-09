@@ -40,7 +40,7 @@ class FetchPoliceCalls extends Job implements SelfHandling
             'serious' => [
               '/burglary/','/robbery/','/homicide/','/shooting/','/shots/',
               '/theft/','/missing/','/doa/','/suicide/','/holdup/','/stabbing/',
-              '/assault/','/weapon/','/wanted/', '/strong-arm/'
+              '/assault/','/weapon/','/wanted/', '/strong-arm/', '/explos/',
             ]
         ];
 
